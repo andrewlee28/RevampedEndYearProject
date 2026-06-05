@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 7951c5f6c04f34c2dac6767e9c96e0e8
+  productGUID: 2ba2014972fb33b43aaa402f9e7af286
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: revampedgame
+  productName: My project
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -516,7 +516,7 @@ PlayerSettings:
   ps4GarlicHeapSize: 2048
   ps4ProGarlicHeapSize: 2560
   playerPrefsMaxSize: 32768
-  ps4Passcode: XxbwVfZjeFwmM5OSrgRuri1F4C3YP7DW
+  ps4Passcode: frAQBc8Wsa1xVPfvJcrgRYwTiizs2trQ
   ps4pnSessions: 1
   ps4pnPresence: 1
   ps4pnFriends: 1
@@ -584,7 +584,8 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: UNITY_TEMPLATE_PLATFORMER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -605,14 +606,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: revampedgame
+  metroPackageName: My project
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: revampedgame
+  metroApplicationDescription: My project
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -681,13 +682,13 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 5b282fe9-b0ed-48ec-8148-bf04dfbfa3c0
+  cloudProjectId: ee117b4c-ff4e-4272-b158-7fc8c975f805
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: revampedgame
-  organizationId: unity_27andrewlee
+  projectName: My project
+  organizationId: jodche28
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
