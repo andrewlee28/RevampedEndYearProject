@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     // Track the current platform we are standing on for dropping
     private Collider2D currentPlatform;
 
+    // Number of lives
+    public int lives = 3;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -134,6 +137,17 @@ public class PlayerMovement : MonoBehaviour
 
     void RespawnPlayer()
     {
+        lives--;
+
+        Debug.Log(gameObject.name + " has " + lives + " lives remaining");
+
+        if (lives <= 0)
+        {
+            Debug.Log(gameObject.name + " is out of lives!");
+            gameObject.SetActive(false);
+            return;
+        }
+
         transform.position = spawnPosition;
         isMovementLocked = false; 
         isReloading = false;
