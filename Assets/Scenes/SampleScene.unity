@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 346747467}
   m_Layer: 3
   m_Name: Collider_MainFloor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1716,7 +1716,7 @@ GameObject:
   - component: {fileID: 716637526}
   m_Layer: 3
   m_Name: Collider_Ledge_BottomRight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2884,7 +2884,7 @@ GameObject:
   - component: {fileID: 1570048796}
   m_Layer: 3
   m_Name: Collider_BottomFloor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3287,7 +3287,7 @@ GameObject:
   - component: {fileID: 1893942356}
   m_Layer: 3
   m_Name: Collider_Ledge_BottomLeft
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3859,7 +3859,7 @@ GameObject:
   - component: {fileID: 2110705260}
   m_Layer: 3
   m_Name: Collider_Ledge_TopRight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4017,7 +4017,7 @@ GameObject:
   - component: {fileID: 2126567293}
   m_Layer: 3
   m_Name: Collider_Ledge_TopLeft
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

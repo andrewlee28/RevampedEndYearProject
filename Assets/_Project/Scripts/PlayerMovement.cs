@@ -31,21 +31,24 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = false;
     private float horizontalInput;
     
-    // --- AMMO & LOCKOUT SYSTEM ---
+    // --- AMMO, LOCKOUT & DOUBLE JUMP SYSTEM ---
     private int currentAmmo;
     private bool isReloading = false;
     private float reloadTimer = 0f;
     private bool isMovementLocked = false;
     private float lockTimer = 0f;
-
-    // Track the current platform we are standing on for dropping
     private Collider2D currentPlatform;
+
+    // Double Jump Variables
+    private int jumpsLeft;
+    private int maxJumps = 2; // 1 for normal jump, 2 for double jump!
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentAmmo = maxAmmo;
+        jumpsLeft = maxJumps; // Initialize jump count
     }
 
     void Update()
@@ -106,14 +109,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 5. Jumping Input
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        // 5. FIXED JUMPING INPUT (Double Jump Edition)
+        // Instead of checking "isGrounded", we check if we have jumps remaining!
+        if (Input.GetKeyDown(jumpKey) && jumpsLeft > 0)
         {
+            // Apply upward force cleanly
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            isGrounded = false; 
+            
+            jumpsLeft--;        // Use up one jump slot
+            isGrounded = false; // We are officially in the air now
         }
 
-        // 6. Platform Drop Input (FIXED SYSTEM)
+        // 6. Platform Drop Input
         if (Input.GetKeyDown(dropKey) && isGrounded && currentPlatform != null)
         {
             Collider2D playerCollider = GetComponent<Collider2D>();
@@ -138,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
         isMovementLocked = false; 
         isReloading = false;
         currentAmmo = maxAmmo; 
+        jumpsLeft = maxJumps; // Reset jumps on respawn
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -182,10 +190,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // --- COLLISION TRACKING FOR GROUND AND PLATFORMS ---
+    // --- COLLISION TRACKING FOR GROUND AND JUMP RESETS ---
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Cache the platform we just landed on
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
             currentPlatform = collision.collider;
@@ -199,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
             if (contact.normal.y > 0.6f)
             {
                 isGrounded = true;
+                jumpsLeft = maxJumps; // RESET JUMPS BACK TO 2 WHEN TOUCHING THE FLOOR!
                 return;
             }
         }
@@ -208,10 +216,15 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = false;
         
-        // Clear the platform reference when we leave it
         if (collision.collider == currentPlatform)
         {
             currentPlatform = null;
+        }
+
+        // If a player walks off a ledge without jumping, they should only get 1 mid-air jump left
+        if (jumpsLeft == maxJumps)
+        {
+            jumpsLeft = maxJumps - 1;
         }
     }
 
@@ -243,9 +256,8 @@ public class PlayerMovement : MonoBehaviour
 
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
-        // Ignore collisions to fall through
         Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
-        yield return new WaitForSeconds(0.35f); // Give enough time to clear the platform depth
+        yield return new WaitForSeconds(0.35f); 
         
         if (platformCollider != null && playerCollider != null)
         {
