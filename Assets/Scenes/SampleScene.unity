@@ -346,11 +346,13 @@ MonoBehaviour:
   shootKey: 91
   bulletPrefab: {fileID: 6700418256056836054, guid: e6a10716abfa5984789335e9379e83f4, type: 3}
   firePoint: {fileID: 1715341474}
+  currentGun: {fileID: 921643891}
   bulletSpeed: 6
   knockbackForce: 4
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
+  lives: 3
 --- !u!1 &103151637
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +671,7 @@ GameObject:
   - component: {fileID: 346747467}
   m_Layer: 3
   m_Name: Collider_MainFloor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -823,6 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 362125021}
   - component: {fileID: 362125022}
+  - component: {fileID: 362125023}
   m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
@@ -904,6 +907,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &362125023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362125020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c3e543a78d647dc8959a27c9cbff20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
 --- !u!1 &431848765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,7 +1735,7 @@ GameObject:
   - component: {fileID: 716637526}
   m_Layer: 3
   m_Name: Collider_Ledge_BottomRight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2083,6 +2102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 921643889}
   - component: {fileID: 921643890}
+  - component: {fileID: 921643891}
   m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
@@ -2164,6 +2184,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &921643891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921643888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c3e543a78d647dc8959a27c9cbff20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
 --- !u!1 &935601826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,7 +2920,7 @@ GameObject:
   - component: {fileID: 1570048796}
   m_Layer: 3
   m_Name: Collider_BottomFloor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3287,7 +3323,7 @@ GameObject:
   - component: {fileID: 1893942356}
   m_Layer: 3
   m_Name: Collider_Ledge_BottomLeft
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3655,11 +3691,13 @@ MonoBehaviour:
   shootKey: 122
   bulletPrefab: {fileID: 6700418256056836054, guid: e6a10716abfa5984789335e9379e83f4, type: 3}
   firePoint: {fileID: 1744853741}
+  currentGun: {fileID: 362125023}
   bulletSpeed: 6
   knockbackForce: 4
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
+  lives: 3
 --- !u!70 &2017811150
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3859,7 +3897,7 @@ GameObject:
   - component: {fileID: 2110705260}
   m_Layer: 3
   m_Name: Collider_Ledge_TopRight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4017,7 +4055,7 @@ GameObject:
   - component: {fileID: 2126567293}
   m_Layer: 3
   m_Name: Collider_Ledge_TopLeft
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Shooting & Ammo Settings")]
     public KeyCode shootKey = KeyCode.LeftBracket; 
     public GameObject bulletPrefab;    
-    public Transform firePoint;        
+    public Transform firePoint;
+    public Gun currentGun;        
     public float bulletSpeed = 12f;    
     public float knockbackForce = 7f; 
     public float recoilForce = 4f; 
@@ -45,21 +46,29 @@ public class PlayerMovement : MonoBehaviour
     public int lives = 3;
 
     void Start()
+{
+    rb = GetComponent<Rigidbody2D>();
+    anim = GetComponent<Animator>();
+
+    if (currentGun == null)
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentAmmo = maxAmmo;
+        Debug.LogError(gameObject.name + " has no gun assigned!");
+        return;
     }
+
+    currentAmmo = currentGun.maxAmmo;
+}
 
     void Update()
     {
+        //Debug.Log(gameObject.name + " locked: " + isMovementLocked);
         // 1. Handle reload timer countdown
         if (isReloading)
         {
             reloadTimer -= Time.deltaTime;
             if (reloadTimer <= 0f)
             {
-                currentAmmo = maxAmmo;
+                currentAmmo = currentGun.maxAmmo;
                 isReloading = false;
                 Debug.Log($"{gameObject.name} reloaded!");
             }
@@ -132,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     void StartReload()
     {
         isReloading = true;
-        reloadTimer = reloadDuration;
+        reloadTimer = currentGun.reloadDuration;
     }
 
     void RespawnPlayer()
@@ -166,28 +175,21 @@ public class PlayerMovement : MonoBehaviour
 
             float shootingDirection = Mathf.Sign(transform.localScale.x);
 
-            GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D bulletRb = newBullet.GetComponent<Rigidbody2D>();
+            currentGun.Fire(
+                bulletPrefab,
+                firePoint,
+                shootingDirection
+            );
 
-            if (bulletRb != null)
-            {
-                bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
-
-                Vector3 bulletScale = newBullet.transform.localScale;
-                bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
-                newBullet.transform.localScale = bulletScale;
-            }
-
-            // --- RECOIL ONLY WHEN STILL ---
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
                 lockTimer = 0.05f; 
-                rb.linearVelocity = new Vector2(-shootingDirection * recoilForce, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(
+                -shootingDirection * currentGun.recoilForce,
+                rb.linearVelocity.y
+                );
             }
-
-            newBullet.name = this.gameObject.name + "_Bullet";
-            Destroy(newBullet, 3f);
 
             if (currentAmmo <= 0)
             {
