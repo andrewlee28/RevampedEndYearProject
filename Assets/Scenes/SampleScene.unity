@@ -376,6 +376,9 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+  bombThrowKey: 93
+  bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
+  throwVelocity: {x: 1.2, y: 1}
 --- !u!1 &103151637
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,7 +3765,7 @@ MonoBehaviour:
   jumpForce: 3.75
   fallThreshold: -5
   spawnPosition: {x: -1.2, y: 2.5, z: 0}
-  shootKey: 122
+  shootKey: 116
   bulletPrefab: {fileID: 6700418256056836054, guid: e6a10716abfa5984789335e9379e83f4, type: 3}
   firePoint: {fileID: 1744853741}
   currentGun: {fileID: 362125023}
@@ -3772,6 +3775,9 @@ MonoBehaviour:
   maxAmmo: 15
   reloadDuration: 2
   lives: 3
+  bombThrowKey: 121
+  bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
+  throwVelocity: {x: 1.2, y: 1}
 --- !u!70 &2017811150
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
