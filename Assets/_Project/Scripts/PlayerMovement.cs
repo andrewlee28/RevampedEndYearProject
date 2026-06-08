@@ -91,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(moveLeftKey)) horizontalInput = -1f;
             else if (Input.GetKey(moveRightKey)) horizontalInput = 1f;
         }
-
+        bool isRunning = Mathf.Abs(horizontalInput) > 0.01f;
+        anim.SetBool("isRunning", isRunning);
         if (anim != null)
         {
             anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
