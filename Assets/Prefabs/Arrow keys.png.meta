@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: eea4c54de4189cf42a6547dff451bd44
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8392964993842342559
+    second: Arrow keys_0
+  - first:
+      213: -2498087626144364355
+    second: Arrow keys_1
+  - first:
+      213: 7241172051326052900
+    second: Arrow keys_2
+  - first:
+      213: -2869987908958476186
+    second: Arrow keys_3
+  - first:
+      213: -5458718195954137512
+    second: Arrow keys_4
+  - first:
+      213: -118389297335255512
+    second: Arrow keys_5
+  - first:
+      213: -3000468599019046635
+    second: Arrow keys_6
+  - first:
+      213: -6589988766074385906
+    second: Arrow keys_7
+  - first:
+      213: 8948859876838448165
+    second: Arrow keys_8
+  - first:
+      213: 6220832937699642073
+    second: Arrow keys_9
+  - first:
+      213: 6139716235547129863
+    second: Arrow keys_10
+  - first:
+      213: 682837202815275193
+    second: Arrow keys_11
+  - first:
+      213: 7895019070903564485
+    second: Arrow keys_12
+  - first:
+      213: -2498360194175172919
+    second: Arrow keys_13
+  - first:
+      213: 3419951055581117515
+    second: Arrow keys_14
+  - first:
+      213: -1770162027820296083
+    second: Arrow keys_15
+  - first:
+      213: -7608162898695814112
+    second: Arrow keys_16
+  - first:
+      213: 8761822756611684789
+    second: Arrow keys_17
+  - first:
+      213: 7454579792758138286
+    second: Arrow keys_18
+  - first:
+      213: 3643215940459659027
+    second: Arrow keys_19
+  - first:
+      213: 7100088245028866656
+    second: Arrow keys_20
+  - first:
+      213: 8054994742047204722
+    second: Arrow keys_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Arrow keys_0
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 494
+        width: 467
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9ae24ea13dc97470800000000000000
+      internalID: 8392964993842342559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_1
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 950
+        width: 180
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db8cdd91a82055dd0800000000000000
+      internalID: -2498087626144364355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_2
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 677
+        width: 7
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42aa6c48d9fcd7460800000000000000
+      internalID: 7241172051326052900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 503
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6682dd0e331cb28d0800000000000000
+      internalID: -2869987908958476186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_4
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 490
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8564139e8bcbe34b0800000000000000
+      internalID: -5458718195954137512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 439
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82ebf13bf856b5ef0800000000000000
+      internalID: -118389297335255512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 23
+        width: 456
+        height: 462
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51971c3d4b13c56d0800000000000000
+      internalID: -3000468599019046635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 479
+        width: 62
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0a425ce128ab84a0800000000000000
+      internalID: -6589988766074385906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_8
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 34
+        width: 472
+        height: 451
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52c93b715acb03c70800000000000000
+      internalID: 8948859876838448165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_9
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 36
+        width: 456
+        height: 450
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da03a2f896d45650800000000000000
+      internalID: 6220832937699642073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_10
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 482
+        width: 207
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7083c79f267a43550800000000000000
+      internalID: 6139716235547129863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_11
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 301
+        width: 6
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b0d93171dce97900800000000000000
+      internalID: 682837202815275193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_12
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 56
+        width: 8
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c83420f30eb09d60800000000000000
+      internalID: 7895019070903564485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_13
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 36
+        width: 44
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ce7639e3aa045dd0800000000000000
+      internalID: -2498360194175172919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_14
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 22
+        width: 206
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4c72298d5b167f20800000000000000
+      internalID: 3419951055581117515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_15
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 21
+        width: 43
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d68d2e0b30f1f67e0800000000000000
+      internalID: -1770162027820296083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_16
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 311
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0240ee547206a6690800000000000000
+      internalID: -7608162898695814112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_17
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 23
+        width: 136
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9f5c0006f389970800000000000000
+      internalID: 8761822756611684789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_18
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 23
+        width: 224
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea5672153dcf37760800000000000000
+      internalID: 7454579792758138286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_19
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 0
+        width: 85
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31f7323689d4f8230800000000000000
+      internalID: 3643215940459659027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_20
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 0
+        width: 187
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06a4fd614a4988260800000000000000
+      internalID: 7100088245028866656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow keys_21
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 0
+        width: 365
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 275ec5b6a0719cf60800000000000000
+      internalID: 8054994742047204722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Arrow keys_0: 8392964993842342559
+      Arrow keys_1: -2498087626144364355
+      Arrow keys_10: 6139716235547129863
+      Arrow keys_11: 682837202815275193
+      Arrow keys_12: 7895019070903564485
+      Arrow keys_13: -2498360194175172919
+      Arrow keys_14: 3419951055581117515
+      Arrow keys_15: -1770162027820296083
+      Arrow keys_16: -7608162898695814112
+      Arrow keys_17: 8761822756611684789
+      Arrow keys_18: 7454579792758138286
+      Arrow keys_19: 3643215940459659027
+      Arrow keys_2: 7241172051326052900
+      Arrow keys_20: 7100088245028866656
+      Arrow keys_21: 8054994742047204722
+      Arrow keys_3: -2869987908958476186
+      Arrow keys_4: -5458718195954137512
+      Arrow keys_5: -118389297335255512
+      Arrow keys_6: -3000468599019046635
+      Arrow keys_7: -6589988766074385906
+      Arrow keys_8: 8948859876838448165
+      Arrow keys_9: 6220832937699642073
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
