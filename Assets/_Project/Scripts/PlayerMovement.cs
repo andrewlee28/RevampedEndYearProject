@@ -26,34 +26,37 @@ public class PlayerMovement : MonoBehaviour
     public int maxAmmo = 15;
     public float reloadDuration = 2f;
 
+    [Header("Bomb Drop Settings")]
+    public KeyCode bombThrowKey = KeyCode.RightBracket; 
+    public GameObject bombPrefab;                     
+    public Vector2 throwVelocity = new Vector2(1.5f, 1.0f); // Drops it slightly forward and up out of your feet
+
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded = false;
     private float horizontalInput;
     
-    // --- AMMO, LOCKOUT & DOUBLE JUMP SYSTEM ---
+    // --- WEAPONS, JUMPS & LOCKOUT STATES ---
     private int currentAmmo;
     private bool isReloading = false;
     private float reloadTimer = 0f;
     private bool isMovementLocked = false;
     private float lockTimer = 0f;
     private Collider2D currentPlatform;
-
-    // Double Jump Variables
     private int jumpsLeft;
-    private int maxJumps = 2; // 1 for normal jump, 2 for double jump!
+    private int maxJumps = 2; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentAmmo = maxAmmo;
-        jumpsLeft = maxJumps; // Initialize jump count
+        jumpsLeft = maxJumps;
     }
 
     void Update()
     {
-        // 1. Handle reload timer countdown
+        // 1. Reload Timer
         if (isReloading)
         {
             reloadTimer -= Time.deltaTime;
@@ -61,11 +64,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 currentAmmo = maxAmmo;
                 isReloading = false;
-                Debug.Log($"{gameObject.name} reloaded!");
             }
         }
 
-        // 2. Handle the movement lock timer (For Recoil/Knockback)
+        // 2. Lockout Timer
         if (isMovementLocked)
         {
             lockTimer -= Time.deltaTime;
@@ -75,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 3. Horizontal Input calculation
+        // 3. Horizontal Inputs
         horizontalInput = 0f;
         if (!isMovementLocked)
         {
@@ -109,18 +111,21 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 5. FIXED JUMPING INPUT (Double Jump Edition)
-        // Instead of checking "isGrounded", we check if we have jumps remaining!
-        if (Input.GetKeyDown(jumpKey) && jumpsLeft > 0)
+        // 5. BOMB DROP INPUT
+        if (Input.GetKeyDown(bombThrowKey) && !isMovementLocked)
         {
-            // Apply upward force cleanly
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            
-            jumpsLeft--;        // Use up one jump slot
-            isGrounded = false; // We are officially in the air now
+            DropItem();
         }
 
-        // 6. Platform Drop Input
+        // 6. Double Jump Input
+        if (Input.GetKeyDown(jumpKey) && jumpsLeft > 0)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            jumpsLeft--;        
+            isGrounded = false; 
+        }
+
+        // 7. Platform Drop Input
         if (Input.GetKeyDown(dropKey) && isGrounded && currentPlatform != null)
         {
             Collider2D playerCollider = GetComponent<Collider2D>();
@@ -131,6 +136,37 @@ public class PlayerMovement : MonoBehaviour
         }
 
         FlipSprite();
+    }
+
+    void DropItem()
+    {
+        if (bombPrefab != null && firePoint != null)
+        {
+            float facingDirection = Mathf.Sign(transform.localScale.x);
+
+            GameObject newBomb = Instantiate(bombPrefab, firePoint.position, Quaternion.identity);
+            
+            Bomb bombScript = newBomb.GetComponent<Bomb>();
+            if (bombScript != null) bombScript.Initialize(gameObject.name);
+
+            Rigidbody2D bombRb = newBomb.GetComponent<Rigidbody2D>();
+            if (bombRb != null)
+            {
+                bombRb.linearVelocity = new Vector2(facingDirection * throwVelocity.x, throwVelocity.y);
+            }
+        }
+    }
+
+    // --- RECOIL RECEIVER (kept for bullet impacts) ---
+    public void TakeBlastKnockback(Vector2 blastVelocity)
+    {
+        if (rb != null)
+        {
+            isMovementLocked = true;
+            lockTimer = 0.4f; 
+            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = blastVelocity; 
+        }
     }
 
     void StartReload()
@@ -145,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         isMovementLocked = false; 
         isReloading = false;
         currentAmmo = maxAmmo; 
-        jumpsLeft = maxJumps; // Reset jumps on respawn
+        jumpsLeft = maxJumps; 
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -172,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
                 newBullet.transform.localScale = bulletScale;
             }
 
-            // --- RECOIL ONLY WHEN STILL ---
+            // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
@@ -190,7 +226,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // --- COLLISION TRACKING FOR GROUND AND JUMP RESETS ---
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
@@ -206,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             if (contact.normal.y > 0.6f)
             {
                 isGrounded = true;
-                jumpsLeft = maxJumps; // RESET JUMPS BACK TO 2 WHEN TOUCHING THE FLOOR!
+                jumpsLeft = maxJumps; 
                 return;
             }
         }
@@ -215,41 +250,26 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
-        
-        if (collision.collider == currentPlatform)
-        {
-            currentPlatform = null;
-        }
+        if (collision.collider == currentPlatform) currentPlatform = null;
 
-        // If a player walks off a ledge without jumping, they should only get 1 mid-air jump left
-        if (jumpsLeft == maxJumps)
-        {
-            jumpsLeft = maxJumps - 1;
-        }
+        if (jumpsLeft == maxJumps) jumpsLeft = maxJumps - 1;
     }
 
-    // --- ENEMY BULLET KNOCKBACK DETECTOR ---
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {
-            if (collision.name.StartsWith(this.gameObject.name))
-            {
-                return; 
-            }
+            if (collision.name.StartsWith(this.gameObject.name)) return; 
 
             Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
             if (bulletRb != null && rb != null)
             {
                 float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
-
                 isMovementLocked = true;
                 lockTimer = 0.2f; 
-
                 rb.linearVelocity = Vector2.zero;
                 rb.linearVelocity = new Vector2(pushDirection * knockbackForce, rb.linearVelocity.y);
             }
-
             Destroy(collision.gameObject);
         }
     }
@@ -258,7 +278,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
         yield return new WaitForSeconds(0.35f); 
-        
         if (platformCollider != null && playerCollider != null)
         {
             Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
