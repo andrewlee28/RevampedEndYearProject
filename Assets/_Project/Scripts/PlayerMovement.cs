@@ -59,18 +59,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // 1. Get your components right away
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        // 2. Check for the gun error safely
         if (currentGun == null)
         {
             Debug.LogError(gameObject.name + " has no gun assigned!");
-            return;
+            return; 
         }
 
+        // 3. Initialize variables OUTSIDE the if-block so they actually execute
         currentAmmo = currentGun.maxAmmo;
-        jumpsLeft = maxJumps;
-        currentBombsLeft = maxBombs; 
+        jumpsLeft = maxJumps; 
     }
 
     void Update()
@@ -117,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
         }
         bool isRunning = Mathf.Abs(horizontalInput) > 0.01f;
         anim.SetBool("isRunning", isRunning);
+
         if (anim != null)
         {
             anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
@@ -155,6 +158,23 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpsLeft--;        
             isGrounded = false; 
+
+            // Force the animation to trigger IMMEDIATELY
+            if (anim != null)
+            {
+                anim.SetBool("isJumping", true);
+                
+                // Forces the animation state to snap-play from frame 0 instantly.
+                // This overrides delays and forces double jumps to restart the animation!
+                anim.Play("Jump", 0, 0f); 
+            }
+        }
+
+        // Keep updating the live state so it transitions back to landing smoothly
+        if (anim != null)
+        {
+            bool isJumping = rb.linearVelocity.y > 0.1f || !isGrounded;
+            anim.SetBool("isJumping", isJumping);
         }
 
         // 8. Platform Descend Input
@@ -164,6 +184,20 @@ public class PlayerMovement : MonoBehaviour
             if (playerCollider != null)
             {
                 StartCoroutine(TemporaryDrop(currentPlatform, playerCollider));
+
+                // Force the player out of the grounded state instantly
+                isGrounded = false;
+
+                // Force the falling animation to trigger IMMEDIATELY
+                if (anim != null)
+                {
+                    anim.SetBool("isGrounded", false); // If you use an isGrounded bool in Animator
+                    anim.SetBool("isJumping", false);
+                    anim.SetBool("isFalling", true);
+                    
+                    // Forces the fall animation state to play from frame 0 instantly.
+                    anim.Play("Fall", 0, 0f); 
+                }
             }
         }
 
@@ -247,8 +281,22 @@ public class PlayerMovement : MonoBehaviour
             currentAmmo--;
             float shootingDirection = Mathf.Sign(transform.localScale.x);
 
-            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
+            currentGun.Fire(
+                bulletPrefab,
+                firePoint,
+                shootingDirection
+            );
+/*
+            if (bulletRb != null)
+            {
+                bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
 
+                Vector3 bulletScale = newBullet.transform.localScale;
+                bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
+                newBullet.transform.localScale = bulletScale;
+            }
+*/
+            // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
