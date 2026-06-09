@@ -29,8 +29,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Bomb Drop Settings")]
     public KeyCode bombThrowKey = KeyCode.RightBracket; 
-    public GameObject bombPrefab;                     
-    public Vector2 throwVelocity = new Vector2(1.5f, 1.0f); // Drops it slightly forward and up out of your feet
+    public GameObject bombPrefab;                      
+    public Vector2 throwVelocity = new Vector2(1.5f, 1.0f); 
+    public int maxBombs = 3;                 
+    public float bombCooldownDuration = 5f;  
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -47,26 +49,29 @@ public class PlayerMovement : MonoBehaviour
     private int jumpsLeft;
     private int maxJumps = 2; 
 
+    // --- BOMB TRACKING STATES ---
+    private int currentBombsLeft;
+    private bool isBombCooldown = false;
+    private float bombCooldownTimer = 0f;
+
     // Number of lives
     public int lives = 3;
 
     void Start()
-{
-    rb = GetComponent<Rigidbody2D>();
-    anim = GetComponent<Animator>();
-
-    if (currentGun == null)
     {
-        Debug.LogError(gameObject.name + " has no gun assigned!");
-        return;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentAmmo = maxAmmo;
-        jumpsLeft = maxJumps;
-    }
 
-    currentAmmo = currentGun.maxAmmo;
-}
+        if (currentGun == null)
+        {
+            Debug.LogError(gameObject.name + " has no gun assigned!");
+            return;
+        }
+
+        currentAmmo = currentGun.maxAmmo;
+        jumpsLeft = maxJumps;
+        currentBombsLeft = maxBombs; 
+    }
 
     void Update()
     {
@@ -91,7 +96,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 3. Horizontal Inputs
+        // 3. Bomb Cooldown Timer
+        if (isBombCooldown)
+        {
+            bombCooldownTimer -= Time.deltaTime;
+            if (bombCooldownTimer <= 0f)
+            {
+                currentBombsLeft = maxBombs; 
+                isBombCooldown = false;
+                Debug.Log(gameObject.name + " Bombs Refilled!");
+            }
+        }
+
+        // 4. Horizontal Inputs
         horizontalInput = 0f;
         if (!isMovementLocked)
         {
@@ -110,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             RespawnPlayer();
         }
 
-        // 4. Shooting Input
+        // 5. Shooting Input
         if (Input.GetKeyDown(shootKey)) 
         {
             if (!isReloading)
@@ -126,13 +143,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 5. BOMB DROP INPUT
-        if (Input.GetKeyDown(bombThrowKey) && !isMovementLocked)
+        // 6. Bomb Drop Input
+        if (Input.GetKeyDown(bombThrowKey) && !isMovementLocked && !isBombCooldown)
         {
             DropItem();
         }
 
-        // 6. Double Jump Input
+        // 7. Jump Input
         if (Input.GetKeyDown(jumpKey) && jumpsLeft > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -140,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false; 
         }
 
-        // 7. Platform Drop Input
+        // 8. Platform Descend Input
         if (Input.GetKeyDown(dropKey) && isGrounded && currentPlatform != null)
         {
             Collider2D playerCollider = GetComponent<Collider2D>();
@@ -155,8 +172,10 @@ public class PlayerMovement : MonoBehaviour
 
     void DropItem()
     {
-        if (bombPrefab != null && firePoint != null)
+        if (bombPrefab != null && firePoint != null && currentBombsLeft > 0)
         {
+            currentBombsLeft--; 
+
             float facingDirection = Mathf.Sign(transform.localScale.x);
 
             GameObject newBomb = Instantiate(bombPrefab, firePoint.position, Quaternion.identity);
@@ -169,10 +188,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 bombRb.linearVelocity = new Vector2(facingDirection * throwVelocity.x, throwVelocity.y);
             }
+
+            if (currentBombsLeft <= 0)
+            {
+                isBombCooldown = true;
+                bombCooldownTimer = bombCooldownDuration;
+                Debug.Log(gameObject.name + " out of bombs! Cooldown activated.");
+            }
         }
     }
 
-    // --- RECOIL RECEIVER (kept for bullet impacts) ---
     public void TakeBlastKnockback(Vector2 blastVelocity)
     {
         if (rb != null)
@@ -193,7 +218,6 @@ public class PlayerMovement : MonoBehaviour
     void RespawnPlayer()
     {
         lives--;
-
         Debug.Log(gameObject.name + " has " + lives + " lives remaining");
 
         if (lives <= 0)
@@ -206,8 +230,10 @@ public class PlayerMovement : MonoBehaviour
         transform.position = spawnPosition;
         isMovementLocked = false; 
         isReloading = false;
+        isBombCooldown = false;
         currentAmmo = maxAmmo; 
         jumpsLeft = maxJumps; 
+        currentBombsLeft = maxBombs; 
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -219,33 +245,15 @@ public class PlayerMovement : MonoBehaviour
         if (bulletPrefab != null && firePoint != null)
         {
             currentAmmo--;
-
             float shootingDirection = Mathf.Sign(transform.localScale.x);
 
-            currentGun.Fire(
-                bulletPrefab,
-                firePoint,
-                shootingDirection
-            );
+            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
 
-            if (bulletRb != null)
-            {
-                bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
-
-                Vector3 bulletScale = newBullet.transform.localScale;
-                bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
-                newBullet.transform.localScale = bulletScale;
-            }
-
-            // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
                 lockTimer = 0.05f; 
-                rb.linearVelocity = new Vector2(
-                -shootingDirection * currentGun.recoilForce,
-                rb.linearVelocity.y
-                );
+                rb.linearVelocity = new Vector2(-shootingDirection * currentGun.recoilForce, rb.linearVelocity.y);
             }
 
             if (currentAmmo <= 0)
@@ -255,6 +263,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // --- ACCURATE ENVIRONMENT PHYSICS ENGINE MATRIX ---
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
@@ -265,23 +274,38 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        foreach (ContactPoint2D contact in collision.contacts)
+        if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
-            if (contact.normal.y > 0.6f)
+            foreach (ContactPoint2D contact in collision.contacts)
             {
-                isGrounded = true;
-                jumpsLeft = maxJumps; 
-                return;
+                // Verify the landing normal vector direction is facing upward
+                if (contact.normal.y > 0.6f)
+                {
+                    isGrounded = true;
+                    if (!isMovementLocked)
+                    {
+                        jumpsLeft = maxJumps;
+                    }
+                    return;
+                }
             }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded = false;
-        if (collision.collider == currentPlatform) currentPlatform = null;
-
-        if (jumpsLeft == maxJumps) jumpsLeft = maxJumps - 1;
+        if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
+        {
+            isGrounded = false;
+            if (collision.collider == currentPlatform) 
+            {
+                currentPlatform = null;
+            }
+            if (jumpsLeft == maxJumps) 
+            {
+                jumpsLeft = maxJumps - 1; // Fall off edge gracefully leaves 1 jump remaining
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -305,8 +329,13 @@ public class PlayerMovement : MonoBehaviour
 
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
+        // Turn off collisions to fall through cleanly
         Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+        isGrounded = false;
+        
         yield return new WaitForSeconds(0.35f); 
+
+        // Safely re-engage collisions so you land on the next floor
         if (platformCollider != null && playerCollider != null)
         {
             Physics2D.IgnoreCollision(playerCollider, platformCollider, false);

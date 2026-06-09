@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "revampedgame.slnx"
+    "dotnet.defaultSolution": "RevampedEndYearProject.slnx"
 }
