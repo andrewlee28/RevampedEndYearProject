@@ -50,7 +50,9 @@ public class PlayerMovement : MonoBehaviour
     // Number of lives
     public int lives = 3;
     public float jetpackTimer = 0f;
+    public GameObject jetpack;
     public float shieldTimer = 0f;
+    public GameObject shield;
 
     void Start()
     {
@@ -161,6 +163,10 @@ public class PlayerMovement : MonoBehaviour
             shieldTimer -= Time.deltaTime;
         else
             shieldTimer = 0;
+
+        // 9. Child prefabs
+        jetpack.SetActive(jetpackTimer > 0);
+        shield.SetActive(shieldTimer > 0);
         FlipSprite();
     }
 
