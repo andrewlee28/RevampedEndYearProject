@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2847819589683815965}
   - component: {fileID: 5195909747690923996}
   - component: {fileID: 6950397106533312266}
+  - component: {fileID: 2860570860523210837}
   m_Layer: 0
   m_Name: Ammo
   m_TagString: Bullet
@@ -157,3 +158,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.15, y: 0.07}
   m_Direction: 1
+--- !u!114 &2860570860523210837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6700418256056836054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7700e26db484f2a925892629be4893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  startPosition: {x: 0, y: 0}

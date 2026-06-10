@@ -33,6 +33,16 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 throwVelocity = new Vector2(1.5f, 1.0f);
     public int maxBombs = 3;
     public float bombCooldownDuration = 5f;
+    public Gun currentGun;
+    public float bulletSpeed = 12f;
+    public float recoilForce = 4f;
+    public int maxAmmo = 15;
+    public float reloadDuration = 2f;
+
+    [Header("Weapon Switching")]
+    public KeyCode switchWeaponKey = KeyCode.Q; // Key to cycle weapons
+    public Gun[] loadout;                      // Array to hold all available child guns
+    private int currentGunIndex = 0;           // Tracks which gun in the array is active
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -40,11 +50,13 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
 
     // --- WEAPONS, JUMPS & LOCKOUT STATES ---
+
     private int currentAmmo;
     private bool isReloading = false;
     private float reloadTimer = 0f;
     private bool isMovementLocked = false;
     private float lockTimer = 0f;
+
     private Collider2D currentPlatform;
     private int jumpsLeft;
     private int maxJumps = 2;
@@ -54,12 +66,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isBombCooldown = false;
     private float bombCooldownTimer = 0f;
 
-    // Number of lives
     public int lives = 3;
     public float jetpackTimer = 0f;
     public GameObject jetpack;
     public float shieldTimer = 0f;
     public GameObject shield;
+    private float fireCooldownTimer = 0f;
 
     void Start()
     {
@@ -77,6 +89,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         currentAmmo = currentGun.maxAmmo;
+        // Safety check to ensure weapons are linked in the inspector loadout array
+        if (loadout == null || loadout.Length == 0)
+        {
+            Debug.LogError(gameObject.name + " has no weapons assigned in their loadout array!");
+            return;
+        }
+
+        // Setup weapons and equip the starting one
+        InitializeWeapons();
     }
 
     void Update()
@@ -136,22 +157,31 @@ public class PlayerMovement : MonoBehaviour
 
         // 4. Shooting Input
         if (Input.GetKeyDown(shootKey))
-        {
-            if (!isReloading)
+            // Shooting Input
+            if (Input.GetKeyDown(shootKey))
             {
-                if (currentAmmo > 0)
+                if (!isReloading && fireCooldownTimer <= 0f)
                 {
-                    Shoot();
-                }
-                else
-                {
-                    StartReload();
+                    if (currentAmmo > 0)
+                    {
+                        Shoot();
+                    }
+                    else
+                    {
+                        StartReload();
+                    }
                 }
             }
-        }
 
         // 6. Bomb Drop Input
         if (Input.GetKeyDown(bombThrowKey) && !isMovementLocked && !isBombCooldown)
+            // Weapon Switching Input
+            if (Input.GetKeyDown(switchWeaponKey) && !isReloading)
+            {
+                SwitchWeapon();
+            }
+
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             DropItem();
         }
@@ -259,6 +289,49 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = blastVelocity;
         }
+        // Handle the fire rate cooldown timer
+        if (fireCooldownTimer > 0f)
+        {
+            fireCooldownTimer -= Time.deltaTime;
+        }
+
+        FlipSprite();
+    }
+
+    void InitializeWeapons()
+    {
+        for (int i = 0; i < loadout.Length; i++)
+        {
+            if (loadout[i] != null)
+            {
+                // Deactivate every weapon except the first one (index 0)
+                loadout[i].gameObject.SetActive(i == currentGunIndex);
+            }
+        }
+
+        // Point currentGun to the active weapon slot
+        currentGun = loadout[currentGunIndex];
+        currentAmmo = currentGun.maxAmmo;
+    }
+
+    void SwitchWeapon()
+    {
+        if (loadout == null || loadout.Length <= 1) return;
+
+        // Turn off the gun we are holding right now
+        loadout[currentGunIndex].gameObject.SetActive(false);
+
+        // Advance to the next gun slot (loops back to 0 if it goes over the total length)
+        currentGunIndex = (currentGunIndex + 1) % loadout.Length;
+
+        // Turn on the new gun child object
+        loadout[currentGunIndex].gameObject.SetActive(true);
+
+        // Update the script references to match the newly equipped gun
+        currentGun = loadout[currentGunIndex];
+        currentAmmo = currentGun.maxAmmo;
+
+        Debug.Log($"{gameObject.name} switched to {currentGun.gameObject.name}!");
     }
 
     void StartReload()
@@ -288,6 +361,13 @@ public class PlayerMovement : MonoBehaviour
         currentAmmo = maxAmmo;
         jumpsLeft = maxJumps;
         currentBombsLeft = maxBombs;
+
+        // Safety check to reset current weapon stats upon respawning
+        if (currentGun != null)
+        {
+            currentAmmo = currentGun.maxAmmo;
+        }
+
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -310,6 +390,10 @@ public class PlayerMovement : MonoBehaviour
                         if (bulletRb != null)
                         {
                             bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
+            fireCooldownTimer = currentGun.fireRate;
+            float shootingDirection = Mathf.Sign(transform.localScale.x);
+
+            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
 
                             Vector3 bulletScale = newBullet.transform.localScale;
                             bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
@@ -320,6 +404,7 @@ public class PlayerMovement : MonoBehaviour
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
+                lockTimer = 0.05f;
                 lockTimer = 0.05f;
                 rb.linearVelocity = new Vector2(-shootingDirection * currentGun.recoilForce, rb.linearVelocity.y);
             }
@@ -363,6 +448,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
+            isGrounded = false;
+        if (collision.collider == currentPlatform)
         {
             isGrounded = false;
             if (collision.collider == currentPlatform)
@@ -388,12 +475,33 @@ public class PlayerMovement : MonoBehaviour
                 float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
                 isMovementLocked = true;
                 lockTimer = 0.2f;
-                rb.linearVelocity = Vector2.zero;
-                rb.linearVelocity = new Vector2(pushDirection * knockbackForce, rb.linearVelocity.y);
+                Bullet bulletScript = collision.GetComponent<Bullet>();
+
+                if (bulletRb != null && rb != null && bulletScript != null)
+                {
+                    float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
+                    float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
+
+                    isMovementLocked = true;
+                    lockTimer = 0.2f;
+
+                    float finalKnockback = bulletScript.knockbackForce;
+
+                    if (bulletScript.distanceBasedKnockback)
+                    {
+                        float distancePercentage = Mathf.Clamp01(distanceTravelled / bulletScript.maxKnockbackRange);
+                        float knockbackMultiplier = Mathf.Lerp(bulletScript.maxKnockbackMultiplier, 1f, distancePercentage);
+                        finalKnockback *= knockbackMultiplier;
+                    }
+
+                    rb.linearVelocity = Vector2.zero;
+                    rb.linearVelocity = new Vector2(pushDirection * finalKnockback, rb.linearVelocity.y);
+
+                    Debug.Log($"Hit by {collision.name}. Distance: {distanceTravelled}. Final Knockback: {finalKnockback}");
+                }
+                Destroy(collision.gameObject);
             }
-            Destroy(collision.gameObject);
         }
-    }
 
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
@@ -404,6 +512,8 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.35f);
 
         // Safely re-engage collisions so you land on the next floor
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+        yield return new WaitForSeconds(0.35f);
         if (platformCollider != null && playerCollider != null)
         {
             Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
