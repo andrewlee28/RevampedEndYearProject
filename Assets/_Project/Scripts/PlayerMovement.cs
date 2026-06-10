@@ -22,47 +22,49 @@ public class PlayerMovement : MonoBehaviour
     public Transform firePoint;
     public Gun currentGun;        
     public float bulletSpeed = 12f;    
-    public float knockbackForce = 7f; 
     public float recoilForce = 4f; 
     public int maxAmmo = 15;
     public float reloadDuration = 2f;
+
+    [Header("Weapon Switching")]
+    public KeyCode switchWeaponKey = KeyCode.Q; // Key to cycle weapons
+    public Gun[] loadout;                      // Array to hold all available child guns
+    private int currentGunIndex = 0;           // Tracks which gun in the array is active
 
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded = false;
     private float horizontalInput;
     
-    // --- AMMO & LOCKOUT SYSTEM ---
     private int currentAmmo;
     private bool isReloading = false;
     private float reloadTimer = 0f;
     private bool isMovementLocked = false;
     private float lockTimer = 0f;
 
-    // Track the current platform we are standing on for dropping
     private Collider2D currentPlatform;
 
-    // Number of lives
     public int lives = 3;
+    private float fireCooldownTimer = 0f;
 
     void Start()
-{
-    rb = GetComponent<Rigidbody2D>();
-    anim = GetComponent<Animator>();
-
-    if (currentGun == null)
     {
-        Debug.LogError(gameObject.name + " has no gun assigned!");
-        return;
-    }
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
-    currentAmmo = currentGun.maxAmmo;
-}
+        // Safety check to ensure weapons are linked in the inspector loadout array
+        if (loadout == null || loadout.Length == 0)
+        {
+            Debug.LogError(gameObject.name + " has no weapons assigned in their loadout array!");
+            return;
+        }
+
+        // Setup weapons and equip the starting one
+        InitializeWeapons();
+    }
 
     void Update()
     {
-        //Debug.Log(gameObject.name + " locked: " + isMovementLocked);
-        // 1. Handle reload timer countdown
         if (isReloading)
         {
             reloadTimer -= Time.deltaTime;
@@ -74,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 2. Handle the movement lock timer (For Recoil/Knockback)
         if (isMovementLocked)
         {
             lockTimer -= Time.deltaTime;
@@ -84,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 3. Horizontal Input calculation
         horizontalInput = 0f;
         if (!isMovementLocked)
         {
@@ -102,10 +102,10 @@ public class PlayerMovement : MonoBehaviour
             RespawnPlayer();
         }
 
-        // 4. Shooting Input
+        // Shooting Input
         if (Input.GetKeyDown(shootKey)) 
         {
-            if (!isReloading)
+            if (!isReloading && fireCooldownTimer <= 0f) 
             {
                 if (currentAmmo > 0)
                 {
@@ -118,14 +118,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 5. Jumping Input
+        // Weapon Switching Input
+        if (Input.GetKeyDown(switchWeaponKey) && !isReloading)
+        {
+            SwitchWeapon();
+        }
+
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false; 
         }
 
-        // 6. Platform Drop Input (FIXED SYSTEM)
         if (Input.GetKeyDown(dropKey) && isGrounded && currentPlatform != null)
         {
             Collider2D playerCollider = GetComponent<Collider2D>();
@@ -135,7 +139,49 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // Handle the fire rate cooldown timer
+        if (fireCooldownTimer > 0f)
+        {
+            fireCooldownTimer -= Time.deltaTime;
+        }
+
         FlipSprite();
+    }
+
+    void InitializeWeapons()
+    {
+        for (int i = 0; i < loadout.Length; i++)
+        {
+            if (loadout[i] != null)
+            {
+                // Deactivate every weapon except the first one (index 0)
+                loadout[i].gameObject.SetActive(i == currentGunIndex);
+            }
+        }
+
+        // Point currentGun to the active weapon slot
+        currentGun = loadout[currentGunIndex];
+        currentAmmo = currentGun.maxAmmo;
+    }
+
+    void SwitchWeapon()
+    {
+        if (loadout == null || loadout.Length <= 1) return;
+
+        // Turn off the gun we are holding right now
+        loadout[currentGunIndex].gameObject.SetActive(false);
+
+        // Advance to the next gun slot (loops back to 0 if it goes over the total length)
+        currentGunIndex = (currentGunIndex + 1) % loadout.Length;
+
+        // Turn on the new gun child object
+        loadout[currentGunIndex].gameObject.SetActive(true);
+
+        // Update the script references to match the newly equipped gun
+        currentGun = loadout[currentGunIndex];
+        currentAmmo = currentGun.maxAmmo; 
+
+        Debug.Log($"{gameObject.name} switched to {currentGun.gameObject.name}!");
     }
 
     void StartReload()
@@ -147,7 +193,6 @@ public class PlayerMovement : MonoBehaviour
     void RespawnPlayer()
     {
         lives--;
-
         Debug.Log(gameObject.name + " has " + lives + " lives remaining");
 
         if (lives <= 0)
@@ -160,7 +205,13 @@ public class PlayerMovement : MonoBehaviour
         transform.position = spawnPosition;
         isMovementLocked = false; 
         isReloading = false;
-        currentAmmo = maxAmmo; 
+        
+        // Safety check to reset current weapon stats upon respawning
+        if (currentGun != null)
+        {
+            currentAmmo = currentGun.maxAmmo; 
+        }
+
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -172,23 +223,16 @@ public class PlayerMovement : MonoBehaviour
         if (bulletPrefab != null && firePoint != null)
         {
             currentAmmo--;
-
+            fireCooldownTimer = currentGun.fireRate;
             float shootingDirection = Mathf.Sign(transform.localScale.x);
 
-            currentGun.Fire(
-                bulletPrefab,
-                firePoint,
-                shootingDirection
-            );
+            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
 
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
                 lockTimer = 0.05f; 
-                rb.linearVelocity = new Vector2(
-                -shootingDirection * currentGun.recoilForce,
-                rb.linearVelocity.y
-                );
+                rb.linearVelocity = new Vector2(-shootingDirection * currentGun.recoilForce, rb.linearVelocity.y);
             }
 
             if (currentAmmo <= 0)
@@ -198,10 +242,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // --- COLLISION TRACKING FOR GROUND AND PLATFORMS ---
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Cache the platform we just landed on
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
             currentPlatform = collision.collider;
@@ -223,15 +265,12 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
-        
-        // Clear the platform reference when we leave it
         if (collision.collider == currentPlatform)
         {
             currentPlatform = null;
         }
     }
 
-    // --- ENEMY BULLET KNOCKBACK DETECTOR ---
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
@@ -242,15 +281,29 @@ public class PlayerMovement : MonoBehaviour
             }
 
             Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
-            if (bulletRb != null && rb != null)
+            Bullet bulletScript = collision.GetComponent<Bullet>();
+
+            if (bulletRb != null && rb != null && bulletScript != null)
             {
                 float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
+                float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
 
                 isMovementLocked = true;
-                lockTimer = 0.2f; 
+                lockTimer = 0.2f;
+
+                float finalKnockback = bulletScript.knockbackForce;
+
+                if (bulletScript.distanceBasedKnockback)
+                {
+                    float distancePercentage = Mathf.Clamp01(distanceTravelled / bulletScript.maxKnockbackRange);
+                    float knockbackMultiplier = Mathf.Lerp(bulletScript.maxKnockbackMultiplier, 1f, distancePercentage);
+                    finalKnockback *= knockbackMultiplier;
+                }
 
                 rb.linearVelocity = Vector2.zero;
-                rb.linearVelocity = new Vector2(pushDirection * knockbackForce, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(pushDirection * finalKnockback, rb.linearVelocity.y);
+                
+                Debug.Log($"Hit by {collision.name}. Distance: {distanceTravelled}. Final Knockback: {finalKnockback}");
             }
 
             Destroy(collision.gameObject);
@@ -259,10 +312,8 @@ public class PlayerMovement : MonoBehaviour
 
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
-        // Ignore collisions to fall through
         Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
-        yield return new WaitForSeconds(0.35f); // Give enough time to clear the platform depth
-        
+        yield return new WaitForSeconds(0.35f);
         if (platformCollider != null && playerCollider != null)
         {
             Physics2D.IgnoreCollision(playerCollider, platformCollider, false);

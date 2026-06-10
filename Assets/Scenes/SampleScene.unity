@@ -210,6 +210,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &38980915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38980916}
+  - component: {fileID: 38980917}
+  m_Layer: 6
+  m_Name: minigun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &38980916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38980915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &38980917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38980915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff537eca669f54a56b925a4840c5c07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Minigun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &89981651
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +275,7 @@ GameObject:
   - component: {fileID: 89981653}
   - component: {fileID: 89981652}
   - component: {fileID: 89981655}
+  - component: {fileID: 89981656}
   m_Layer: 6
   m_Name: Player_1
   m_TagString: Untagged
@@ -321,6 +375,13 @@ Transform:
   - {fileID: 823491971}
   - {fileID: 988854369}
   - {fileID: 1715341474}
+  - {fileID: 1002118931}
+  - {fileID: 1204918519}
+  - {fileID: 1190060124}
+  - {fileID: 162673826}
+  - {fileID: 689611144}
+  - {fileID: 2093989439}
+  - {fileID: 1403229707}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &89981655
@@ -348,11 +409,40 @@ MonoBehaviour:
   firePoint: {fileID: 1715341474}
   currentGun: {fileID: 921643891}
   bulletSpeed: 6
-  knockbackForce: 4
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
+  switchWeaponKey: 113
+  loadout:
+  - {fileID: 1002118932}
+  - {fileID: 1204918520}
+  - {fileID: 1190060125}
+  - {fileID: 162673827}
+  - {fileID: 689611145}
+  - {fileID: 2093989440}
+  - {fileID: 1403229708}
   lives: 3
+--- !u!114 &89981656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89981651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817c250cc0abb4eeeb439558b9e0dd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandCannon
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &103151637
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +625,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &162673825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162673826}
+  - component: {fileID: 162673827}
+  m_Layer: 6
+  m_Name: minigun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162673826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162673825}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162673827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162673825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff537eca669f54a56b925a4840c5c07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Minigun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &197386836
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,13 +1059,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 362125020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c3e543a78d647dc8959a27c9cbff20, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a3dd3a73d9a141f395455e40127897c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gun
+  m_EditorClassIdentifier: Assembly-CSharp::BurstRifle
   bulletSpeed: 12
   maxAmmo: 15
   reloadDuration: 2
   recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &431848765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1253,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &470831221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 470831222}
+  - component: {fileID: 470831223}
+  m_Layer: 6
+  m_Name: grenadelauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &470831222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470831221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &470831223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470831221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b2e15c4f0f846909e02f896d31d373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrenadeLauncher
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1831,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &689611143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 689611144}
+  - component: {fileID: 689611145}
+  m_Layer: 6
+  m_Name: grenadelauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &689611144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689611143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &689611145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689611143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b2e15c4f0f846909e02f896d31d373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrenadeLauncher
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &694257983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,13 +2447,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 921643888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c3e543a78d647dc8959a27c9cbff20, type: 3}
+  m_Script: {fileID: 11500000, guid: 817c250cc0abb4eeeb439558b9e0dd67, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gun
+  m_EditorClassIdentifier: Assembly-CSharp::HandCannon
   bulletSpeed: 12
   maxAmmo: 15
   reloadDuration: 2
   recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &935601826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2382,6 +2641,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1002118930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1002118931}
+  - component: {fileID: 1002118932}
+  m_Layer: 6
+  m_Name: pistol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1002118931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002118930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002118932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002118930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d68cd3250fa42ef9e6250e49a17cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pistol
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &1018312396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2785,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1106024520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106024521}
+  - component: {fileID: 1106024522}
+  m_Layer: 6
+  m_Name: burstrifle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1106024521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106024520}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1106024522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106024520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3dd3a73d9a141f395455e40127897c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BurstRifle
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &1181805137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2930,112 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1190060123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1190060124}
+  - component: {fileID: 1190060125}
+  m_Layer: 6
+  m_Name: sniper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1190060124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190060123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1190060125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190060123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6351017dc18544aa38c0ffcfa92374ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sniper
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
+--- !u!1 &1192026253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192026254}
+  - component: {fileID: 1192026255}
+  m_Layer: 6
+  m_Name: pistol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1192026254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192026253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192026255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192026253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d68cd3250fa42ef9e6250e49a17cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pistol
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &1192353017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,6 +3164,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1204918518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1204918519}
+  - component: {fileID: 1204918520}
+  m_Layer: 6
+  m_Name: shotgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1204918519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204918518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1204918520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204918518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc178caeff96749fab0ab4957fd25a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Shotgun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &1226892324
 GameObject:
   m_ObjectHideFlags: 0
@@ -2815,6 +3339,112 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1403229706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1403229707}
+  - component: {fileID: 1403229708}
+  m_Layer: 6
+  m_Name: handcannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1403229707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403229706}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1403229708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403229706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817c250cc0abb4eeeb439558b9e0dd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandCannon
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
+--- !u!1 &1501663280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1501663281}
+  - component: {fileID: 1501663282}
+  m_Layer: 6
+  m_Name: shotgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1501663281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501663280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1501663282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501663280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc178caeff96749fab0ab4957fd25a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Shotgun
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &1532643415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3661,6 +4291,7 @@ GameObject:
   - component: {fileID: 2017811151}
   - component: {fileID: 2017811150}
   - component: {fileID: 2017811149}
+  - component: {fileID: 2017811153}
   m_Layer: 6
   m_Name: Player_2
   m_TagString: Untagged
@@ -3693,10 +4324,18 @@ MonoBehaviour:
   firePoint: {fileID: 1744853741}
   currentGun: {fileID: 362125023}
   bulletSpeed: 6
-  knockbackForce: 4
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
+  switchWeaponKey: 112
+  loadout:
+  - {fileID: 1192026255}
+  - {fileID: 1501663282}
+  - {fileID: 2081057059}
+  - {fileID: 38980917}
+  - {fileID: 470831223}
+  - {fileID: 1106024522}
+  - {fileID: 2091930332}
   lives: 3
 --- !u!70 &2017811150
 CapsuleCollider2D:
@@ -3790,8 +4429,36 @@ Transform:
   - {fileID: 1532643416}
   - {fileID: 152821891}
   - {fileID: 1744853741}
+  - {fileID: 1192026254}
+  - {fileID: 1501663281}
+  - {fileID: 2081057058}
+  - {fileID: 38980916}
+  - {fileID: 470831222}
+  - {fileID: 1106024521}
+  - {fileID: 2091930331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2017811153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017811148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3dd3a73d9a141f395455e40127897c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BurstRifle
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &2024771449
 GameObject:
   m_ObjectHideFlags: 0
@@ -3883,6 +4550,165 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &2081057057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081057058}
+  - component: {fileID: 2081057059}
+  m_Layer: 6
+  m_Name: sniper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2081057058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081057057}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2081057059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081057057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6351017dc18544aa38c0ffcfa92374ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sniper
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
+--- !u!1 &2091930330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091930331}
+  - component: {fileID: 2091930332}
+  m_Layer: 6
+  m_Name: handcannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091930331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091930330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017811152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091930332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091930330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817c250cc0abb4eeeb439558b9e0dd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandCannon
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
+--- !u!1 &2093989438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2093989439}
+  - component: {fileID: 2093989440}
+  m_Layer: 6
+  m_Name: burstrifle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2093989439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093989438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89981654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2093989440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093989438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3dd3a73d9a141f395455e40127897c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BurstRifle
+  bulletSpeed: 12
+  maxAmmo: 15
+  reloadDuration: 2
+  recoilForce: 4
+  knockbackForce: 2
+  distanceBasedKnockback: 0
+  maxKnockbackRange: 3
+  maxKnockbackMultiplier: 3
+  fireRate: 0.2
 --- !u!1 &2110705258
 GameObject:
   m_ObjectHideFlags: 0
