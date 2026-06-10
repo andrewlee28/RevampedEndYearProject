@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
                 firePoint,
                 shootingDirection
             );
-
+/*
             if (bulletRb != null)
             {
                 bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
@@ -236,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
                 bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
                 newBullet.transform.localScale = bulletScale;
             }
-
+*/
             // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
