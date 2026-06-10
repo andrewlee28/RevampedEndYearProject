@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 1084810498}
   - component: {fileID: 1084810497}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: af83b7114e31c204484292d55b40907d, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: f52c85f3ec1756e489f39a95686c3f98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -995,7 +995,7 @@ GameObject:
   - component: {fileID: 2144997829}
   - component: {fileID: 2144997828}
   m_Layer: 5
-  m_Name: Button
+  m_Name: HowToPlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: f52c85f3ec1756e489f39a95686c3f98, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: af83b7114e31c204484292d55b40907d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

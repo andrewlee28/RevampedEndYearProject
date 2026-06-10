@@ -408,6 +408,8 @@ MonoBehaviour:
   bombThrowKey: 93
   bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
   throwVelocity: {x: 1.5, y: 1}
+  maxBombs: 3
+  bombCooldownDuration: 5
   lives: 3
   jetpackTimer: 0
   jetpack: {fileID: 627552315}
@@ -1293,7 +1295,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2131,7 +2133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 345770817567644157, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
       propertyPath: m_Name
@@ -3702,7 +3704,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 345770817567644157, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
       propertyPath: m_SortingOrder
-      value: 200
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
       propertyPath: m_Name
@@ -4227,7 +4229,7 @@ MonoBehaviour:
   jumpForce: 3.75
   fallThreshold: -5
   spawnPosition: {x: -1.2, y: 2.5, z: 0}
-  shootKey: 116
+  shootKey: 122
   bulletPrefab: {fileID: 6700418256056836054, guid: e6a10716abfa5984789335e9379e83f4, type: 3}
   firePoint: {fileID: 1744853741}
   currentGun: {fileID: 362125023}
@@ -4236,9 +4238,11 @@ MonoBehaviour:
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
-  bombThrowKey: 121
+  bombThrowKey: 120
   bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
   throwVelocity: {x: 1.2, y: 1}
+  maxBombs: 3
+  bombCooldownDuration: 5
   lives: 3
   jetpackTimer: 0
   jetpack: {fileID: 1367853388}

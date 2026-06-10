@@ -28,11 +28,11 @@ public class PlayerMovement : MonoBehaviour
     public float reloadDuration = 2f;
 
     [Header("Bomb Drop Settings")]
-    public KeyCode bombThrowKey = KeyCode.RightBracket; 
-    public GameObject bombPrefab;                      
-    public Vector2 throwVelocity = new Vector2(1.5f, 1.0f); 
-    public int maxBombs = 3;                 
-    public float bombCooldownDuration = 5f;  
+    public KeyCode bombThrowKey = KeyCode.RightBracket;
+    public GameObject bombPrefab;
+    public Vector2 throwVelocity = new Vector2(1.5f, 1.0f);
+    public int maxBombs = 3;
+    public float bombCooldownDuration = 5f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             bombCooldownTimer -= Time.deltaTime;
             if (bombCooldownTimer <= 0f)
             {
-                currentBombsLeft = maxBombs; 
+                currentBombsLeft = maxBombs;
                 isBombCooldown = false;
                 Debug.Log(gameObject.name + " Bombs Refilled!");
             }
@@ -157,20 +157,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 7. Jump Input
-        if (Input.GetKeyDown(jumpKey) && jumpsLeft > 0)
+        if (Input.GetKeyDown(jumpKey) && (jumpsLeft > 0 || jetpackTimer > 0))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            jumpsLeft--;        
-            isGrounded = false; 
+            jumpsLeft--;
+            isGrounded = false;
 
             // Force the animation to trigger IMMEDIATELY
             if (anim != null)
             {
                 anim.SetBool("isJumping", true);
-                
+
                 // Forces the animation state to snap-play from frame 0 instantly.
                 // This overrides delays and forces double jumps to restart the animation!
-                anim.Play("Jump", 0, 0f); 
+                anim.Play("Jump", 0, 0f);
             }
         }
 
@@ -198,9 +198,9 @@ public class PlayerMovement : MonoBehaviour
                     anim.SetBool("isGrounded", false); // If you use an isGrounded bool in Animator
                     anim.SetBool("isJumping", false);
                     anim.SetBool("isFalling", true);
-                    
+
                     // Forces the fall animation state to play from frame 0 instantly.
-                    anim.Play("Fall", 0, 0f); 
+                    anim.Play("Fall", 0, 0f);
                 }
             }
         }
@@ -223,10 +223,11 @@ public class PlayerMovement : MonoBehaviour
 
     void DropItem()
     {
+        Debug.Log("DropItem called");
         if (bombPrefab != null && firePoint != null && currentBombsLeft > 0)
         {
-            currentBombsLeft--; 
-
+            currentBombsLeft--;
+            Debug.Log("Bomb thrown by " + gameObject.name);
             float facingDirection = Mathf.Sign(transform.localScale.x);
 
             GameObject newBomb = Instantiate(bombPrefab, firePoint.position, Quaternion.identity);
@@ -270,6 +271,8 @@ public class PlayerMovement : MonoBehaviour
     {
         lives--;
         Debug.Log(gameObject.name + " has " + lives + " lives remaining");
+        jetpackTimer = 0;
+        shieldTimer = 0;
 
         if (lives <= 0)
         {
@@ -282,9 +285,9 @@ public class PlayerMovement : MonoBehaviour
         isMovementLocked = false;
         isReloading = false;
         isBombCooldown = false;
-        currentAmmo = maxAmmo; 
-        jumpsLeft = maxJumps; 
-        currentBombsLeft = maxBombs; 
+        currentAmmo = maxAmmo;
+        jumpsLeft = maxJumps;
+        currentBombsLeft = maxBombs;
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -303,21 +306,21 @@ public class PlayerMovement : MonoBehaviour
                 firePoint,
                 shootingDirection
             );
-/*
-            if (bulletRb != null)
-            {
-                bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
+            /*
+                        if (bulletRb != null)
+                        {
+                            bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
 
-                Vector3 bulletScale = newBullet.transform.localScale;
-                bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
-                newBullet.transform.localScale = bulletScale;
-            }
-*/
+                            Vector3 bulletScale = newBullet.transform.localScale;
+                            bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
+                            newBullet.transform.localScale = bulletScale;
+                        }
+            */
             // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
-                lockTimer = 0.05f; 
+                lockTimer = 0.05f;
                 rb.linearVelocity = new Vector2(-shootingDirection * currentGun.recoilForce, rb.linearVelocity.y);
             }
 
@@ -362,11 +365,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
             isGrounded = false;
-            if (collision.collider == currentPlatform) 
+            if (collision.collider == currentPlatform)
             {
                 currentPlatform = null;
             }
-            if (jumpsLeft == maxJumps) 
+            if (jumpsLeft == maxJumps)
             {
                 jumpsLeft = maxJumps - 1; // Fall off edge gracefully leaves 1 jump remaining
             }
@@ -397,8 +400,8 @@ public class PlayerMovement : MonoBehaviour
         // Turn off collisions to fall through cleanly
         Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
         isGrounded = false;
-        
-        yield return new WaitForSeconds(0.35f); 
+
+        yield return new WaitForSeconds(0.35f);
 
         // Safely re-engage collisions so you land on the next floor
         if (platformCollider != null && playerCollider != null)
