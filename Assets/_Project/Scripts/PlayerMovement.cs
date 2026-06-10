@@ -13,17 +13,17 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 3.75f;
 
     [Header("Respawn Settings")]
-    public float fallThreshold = -5f;  
-    public Vector3 spawnPosition = new Vector3(0.34f, 2.5f, 0f); 
+    public float fallThreshold = -5f;
+    public Vector3 spawnPosition = new Vector3(0.34f, 2.5f, 0f);
 
     [Header("Shooting & Ammo Settings")]
-    public KeyCode shootKey = KeyCode.LeftBracket; 
-    public GameObject bulletPrefab;    
+    public KeyCode shootKey = KeyCode.LeftBracket;
+    public GameObject bulletPrefab;
     public Transform firePoint;
-    public Gun currentGun;        
-    public float bulletSpeed = 12f;    
-    public float knockbackForce = 7f; 
-    public float recoilForce = 4f; 
+    public Gun currentGun;
+    public float bulletSpeed = 12f;
+    public float knockbackForce = 7f;
+    public float recoilForce = 4f;
     public int maxAmmo = 15;
     public float reloadDuration = 2f;
 
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private bool isGrounded = false;
     private float horizontalInput;
-    
+
     // --- WEAPONS, JUMPS & LOCKOUT STATES ---
     private int currentAmmo;
     private bool isReloading = false;
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private float lockTimer = 0f;
     private Collider2D currentPlatform;
     private int jumpsLeft;
-    private int maxJumps = 2; 
+    private int maxJumps = 2;
 
     // --- BOMB TRACKING STATES ---
     private int currentBombsLeft;
@@ -56,23 +56,27 @@ public class PlayerMovement : MonoBehaviour
 
     // Number of lives
     public int lives = 3;
+    public float jetpackTimer = 0f;
+    public GameObject jetpack;
+    public float shieldTimer = 0f;
+    public GameObject shield;
 
     void Start()
     {
-        // 1. Get your components right away
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
-        // 2. Check for the gun error safely
         if (currentGun == null)
         {
             Debug.LogError(gameObject.name + " has no gun assigned!");
-            return; 
+            return;
+            rb = GetComponent<Rigidbody2D>();
+            anim = GetComponent<Animator>();
+            currentAmmo = maxAmmo;
+            jumpsLeft = maxJumps;
         }
 
-        // 3. Initialize variables OUTSIDE the if-block so they actually execute
         currentAmmo = currentGun.maxAmmo;
-        jumpsLeft = maxJumps; 
     }
 
     void Update()
@@ -94,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
             lockTimer -= Time.deltaTime;
             if (lockTimer <= 0f)
             {
-                isMovementLocked = false; 
+                isMovementLocked = false;
             }
         }
 
@@ -130,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
             RespawnPlayer();
         }
 
-        // 5. Shooting Input
-        if (Input.GetKeyDown(shootKey)) 
+        // 4. Shooting Input
+        if (Input.GetKeyDown(shootKey))
         {
             if (!isReloading)
             {
@@ -201,6 +205,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // 8. Deprecate powerup timers (if > 0)
+        if (jetpackTimer > 0)
+            jetpackTimer -= Time.deltaTime;
+        else
+            jetpackTimer = 0;
+        if (shieldTimer > 0)
+            shieldTimer -= Time.deltaTime;
+        else
+            shieldTimer = 0;
+
+        // 9. Child prefabs
+        jetpack.SetActive(jetpackTimer > 0);
+        shield.SetActive(shieldTimer > 0);
         FlipSprite();
     }
 
@@ -213,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
             float facingDirection = Mathf.Sign(transform.localScale.x);
 
             GameObject newBomb = Instantiate(bombPrefab, firePoint.position, Quaternion.identity);
-            
+
             Bomb bombScript = newBomb.GetComponent<Bomb>();
             if (bombScript != null) bombScript.Initialize(gameObject.name);
 
@@ -234,12 +251,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeBlastKnockback(Vector2 blastVelocity)
     {
-        if (rb != null)
+        if (rb != null && shieldTimer <= 0)
         {
             isMovementLocked = true;
-            lockTimer = 0.4f; 
+            lockTimer = 0.4f;
             rb.linearVelocity = Vector2.zero;
-            rb.linearVelocity = blastVelocity; 
+            rb.linearVelocity = blastVelocity;
         }
     }
 
@@ -262,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = spawnPosition;
-        isMovementLocked = false; 
+        isMovementLocked = false;
         isReloading = false;
         isBombCooldown = false;
         currentAmmo = maxAmmo; 
@@ -360,14 +377,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            if (collision.name.StartsWith(this.gameObject.name)) return; 
+            if (collision.name.StartsWith(this.gameObject.name)) return;
 
             Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
-            if (bulletRb != null && rb != null)
+            if (bulletRb != null && rb != null && shieldTimer <= 0)
             {
                 float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
                 isMovementLocked = true;
-                lockTimer = 0.2f; 
+                lockTimer = 0.2f;
                 rb.linearVelocity = Vector2.zero;
                 rb.linearVelocity = new Vector2(pushDirection * knockbackForce, rb.linearVelocity.y);
             }
@@ -400,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FlipSprite()
     {
-        if (horizontalInput > 0.01f) 
+        if (horizontalInput > 0.01f)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
