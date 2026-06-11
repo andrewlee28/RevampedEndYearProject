@@ -1144,8 +1144,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 5644141551454046746, guid: c5225414297214249bcc765aba032afb, type: 3}
-  spawnInterval: 15
+  itemsToSpawn:
+  - name: Weapon
+    prefab: {fileID: 5644141551454046746, guid: c5225414297214249bcc765aba032afb, type: 3}
+    minSpawnTime: 5
+    maxSpawnTime: 7
+    minInitialDelay: 15
+    maxInitialDelay: 30
   spawnPoints:
   - {fileID: 2007188046}
 --- !u!4 &403613560
@@ -1670,8 +1675,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
-  spawnInterval: 15
+  itemsToSpawn:
+  - name: Shield
+    prefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
+    minSpawnTime: 15
+    maxSpawnTime: 25
+    minInitialDelay: 15
+    maxInitialDelay: 25
   spawnPoints:
   - {fileID: 1960472022}
   - {fileID: 1590826874}
@@ -2077,8 +2087,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
-  spawnInterval: 15
+  itemsToSpawn:
+  - name: Health
+    prefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
+    minSpawnTime: 20
+    maxSpawnTime: 30
+    minInitialDelay: 20
+    maxInitialDelay: 30
   spawnPoints:
   - {fileID: 1960472022}
   - {fileID: 1590826874}
@@ -3995,8 +4010,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 4971827962514377621, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
-  spawnInterval: 15
+  itemsToSpawn:
+  - name: Jetpack
+    prefab: {fileID: 4971827962514377621, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+    minSpawnTime: 10
+    maxSpawnTime: 20
+    minInitialDelay: 10
+    maxInitialDelay: 20
   spawnPoints:
   - {fileID: 1960472022}
   - {fileID: 1590826874}
