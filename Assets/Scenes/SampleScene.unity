@@ -1231,10 +1231,10 @@ MonoBehaviour:
   itemsToSpawn:
   - name: Weapon
     prefab: {fileID: 5644141551454046746, guid: c5225414297214249bcc765aba032afb, type: 3}
-    minSpawnTime: 5
-    maxSpawnTime: 7
-    minInitialDelay: 15
-    maxInitialDelay: 30
+    minSpawnTime: 30
+    maxSpawnTime: 35
+    minInitialDelay: 5
+    maxInitialDelay: 7
   spawnPoints:
   - {fileID: 2007188046}
 --- !u!4 &403613560
@@ -1763,10 +1763,10 @@ MonoBehaviour:
   itemsToSpawn:
   - name: Shield
     prefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
-    minSpawnTime: 15
+    minSpawnTime: 20
     maxSpawnTime: 25
-    minInitialDelay: 15
-    maxInitialDelay: 25
+    minInitialDelay: 10
+    maxInitialDelay: 15
   spawnPoints:
   - {fileID: 1960472022}
   - {fileID: 1590826874}
@@ -2266,7 +2266,7 @@ MonoBehaviour:
   itemsToSpawn:
   - name: Health
     prefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
-    minSpawnTime: 20
+    minSpawnTime: 25
     maxSpawnTime: 30
     minInitialDelay: 20
     maxInitialDelay: 30
@@ -4338,10 +4338,10 @@ MonoBehaviour:
   itemsToSpawn:
   - name: Jetpack
     prefab: {fileID: 4971827962514377621, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
-    minSpawnTime: 10
-    maxSpawnTime: 20
-    minInitialDelay: 10
-    maxInitialDelay: 20
+    minSpawnTime: 25
+    maxSpawnTime: 30
+    minInitialDelay: 5
+    maxInitialDelay: 10
   spawnPoints:
   - {fileID: 1960472022}
   - {fileID: 1590826874}
@@ -5642,7 +5642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d72ba6a1194447c7a88f045d395a89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnZone
-  zoneWidth: 5
+  zoneWidth: 3
   zoneHeight: 0.01
 --- !u!4 &2007188047
 Transform:
@@ -5653,7 +5653,7 @@ Transform:
   m_GameObject: {fileID: 2007188045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.063, y: 1.748, z: 0}
+  m_LocalPosition: {x: -0.063, y: 1.717, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
