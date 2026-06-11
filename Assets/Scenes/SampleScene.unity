@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 89981652}
   - component: {fileID: 89981655}
   - component: {fileID: 89981656}
+  - component: {fileID: 89981657}
   m_Layer: 6
   m_Name: Player_1
   m_TagString: Untagged
@@ -409,10 +410,16 @@ MonoBehaviour:
   firePoint: {fileID: 1715341474}
   currentGun: {fileID: 921643891}
   bulletSpeed: 6
+  knockbackForce: 7
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
-  switchWeaponKey: 113
+  bombThrowKey: 93
+  bombPrefab: {fileID: 0}
+  throwVelocity: {x: 1.5, y: 1}
+  maxBombs: 3
+  bombCooldownDuration: 5
+  switchWeaponKey: 112
   loadout:
   - {fileID: 1002118932}
   - {fileID: 1204918520}
@@ -422,6 +429,10 @@ MonoBehaviour:
   - {fileID: 2093989440}
   - {fileID: 1403229708}
   lives: 3
+  jetpackTimer: 0
+  jetpack: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+  shieldTimer: 0
+  shield: {fileID: 2681642149414412436, guid: 9a07d8fbbb7a01a45b51941b67240f43, type: 3}
 --- !u!114 &89981656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +454,28 @@ MonoBehaviour:
   maxKnockbackRange: 3
   maxKnockbackMultiplier: 3
   fireRate: 0.2
+--- !u!95 &89981657
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89981651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &103151637
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,9 +540,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -41970534257140035, guid: ea566e50ed3c23d4db85c3739f54c801, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea566e50ed3c23d4db85c3739f54c801, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1412,7 +1445,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 1.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4292,6 +4325,7 @@ GameObject:
   - component: {fileID: 2017811150}
   - component: {fileID: 2017811149}
   - component: {fileID: 2017811153}
+  - component: {fileID: 2017811154}
   m_Layer: 6
   m_Name: Player_2
   m_TagString: Untagged
@@ -4324,10 +4358,16 @@ MonoBehaviour:
   firePoint: {fileID: 1744853741}
   currentGun: {fileID: 362125023}
   bulletSpeed: 6
+  knockbackForce: 7
   recoilForce: 0.3
   maxAmmo: 15
   reloadDuration: 2
-  switchWeaponKey: 112
+  bombThrowKey: 120
+  bombPrefab: {fileID: 0}
+  throwVelocity: {x: 1.5, y: 1}
+  maxBombs: 3
+  bombCooldownDuration: 5
+  switchWeaponKey: 113
   loadout:
   - {fileID: 1192026255}
   - {fileID: 1501663282}
@@ -4337,6 +4377,10 @@ MonoBehaviour:
   - {fileID: 1106024522}
   - {fileID: 2091930332}
   lives: 3
+  jetpackTimer: 0
+  jetpack: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+  shieldTimer: 0
+  shield: {fileID: 2681642149414412436, guid: 9a07d8fbbb7a01a45b51941b67240f43, type: 3}
 --- !u!70 &2017811150
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4459,6 +4503,28 @@ MonoBehaviour:
   maxKnockbackRange: 3
   maxKnockbackMultiplier: 3
   fireRate: 0.2
+--- !u!95 &2017811154
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017811148}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2024771449
 GameObject:
   m_ObjectHideFlags: 0
