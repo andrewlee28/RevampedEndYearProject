@@ -83,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         currentAmmo = maxAmmo;
         jumpsLeft = maxJumps;
 
+        // ADDED/MOVED HERE: These now properly run every time the game starts
         currentAmmo = currentGun.maxAmmo;
         // Safety check to ensure weapons are linked in the inspector loadout array
         if (loadout == null || loadout.Length == 0)
@@ -93,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Setup weapons and equip the starting one
         InitializeWeapons();
+        currentBombsLeft = maxBombs; 
     }
 
     void Update()
@@ -194,11 +196,26 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Keep updating the live state so it transitions back to landing smoothly
+        // FIX: Structural logic gap elimination
         if (anim != null)
         {
-            bool isJumping = rb.linearVelocity.y > 0.1f || !isGrounded;
-            anim.SetBool("isJumping", isJumping);
+            if (isGrounded)
+            {
+                // Grounded means both are always false
+                anim.SetBool("isJumping", false);
+                anim.SetBool("isFalling", false);
+            }
+            else
+            {
+                // IF WE ARE AIRBORNE:
+                // If velocity is upward, we are strictly jumping.
+                bool rising = rb.linearVelocity.y > 0.01f;
+                
+                anim.SetBool("isJumping", rising);
+                
+                // If we are NOT rising, we MUST be falling. No gaps allowed!
+                anim.SetBool("isFalling", !rising);
+            }
         }
 
         // 8. Platform Descend Input
@@ -419,6 +436,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
+            if (rb != null && rb.linearVelocity.y > 0.1f) return;
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 // Verify the landing normal vector direction is facing upward
