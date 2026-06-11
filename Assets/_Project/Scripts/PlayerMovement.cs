@@ -33,11 +33,6 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 throwVelocity = new Vector2(1.5f, 1.0f);
     public int maxBombs = 3;
     public float bombCooldownDuration = 5f;
-    public Gun currentGun;
-    public float bulletSpeed = 12f;
-    public float recoilForce = 4f;
-    public int maxAmmo = 15;
-    public float reloadDuration = 2f;
 
     [Header("Weapon Switching")]
     public KeyCode switchWeaponKey = KeyCode.Q; // Key to cycle weapons
@@ -479,7 +474,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (bulletRb != null && rb != null && bulletScript != null)
                 {
-                    float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
                     float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
 
                     isMovementLocked = true;
@@ -502,7 +496,7 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
-
+    }
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
         // Turn off collisions to fall through cleanly
