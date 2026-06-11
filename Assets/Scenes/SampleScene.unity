@@ -415,7 +415,7 @@ MonoBehaviour:
   maxAmmo: 15
   reloadDuration: 2
   bombThrowKey: 93
-  bombPrefab: {fileID: 0}
+  bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
   throwVelocity: {x: 1.5, y: 1}
   maxBombs: 3
   bombCooldownDuration: 5
@@ -430,7 +430,7 @@ MonoBehaviour:
   - {fileID: 1403229708}
   lives: 3
   jetpackTimer: 0
-  jetpack: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+  jetpack: {fileID: 1766151950275541721, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
   shieldTimer: 0
   shield: {fileID: 2681642149414412436, guid: 9a07d8fbbb7a01a45b51941b67240f43, type: 3}
 --- !u!114 &89981656
@@ -464,7 +464,7 @@ Animator:
   m_GameObject: {fileID: 89981651}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f44bf5374d3b4445bfb570bd451970c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1596,12 +1596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: -1
-  maxY: 3
 --- !u!4 &565507081
 Transform:
   m_ObjectHideFlags: 0
@@ -1943,12 +1937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: 0
-  maxY: 2
 --- !u!4 &673228276
 Transform:
   m_ObjectHideFlags: 0
@@ -3607,12 +3595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 1766151950275541721, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: 0
-  maxY: 1
 --- !u!4 &1505428202
 Transform:
   m_ObjectHideFlags: 0
@@ -4513,7 +4495,7 @@ MonoBehaviour:
   maxAmmo: 15
   reloadDuration: 2
   bombThrowKey: 120
-  bombPrefab: {fileID: 0}
+  bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
   throwVelocity: {x: 1.5, y: 1}
   maxBombs: 3
   bombCooldownDuration: 5
@@ -4528,7 +4510,7 @@ MonoBehaviour:
   - {fileID: 2091930332}
   lives: 3
   jetpackTimer: 0
-  jetpack: {fileID: 2011470533729789809, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+  jetpack: {fileID: 1766151950275541721, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
   shieldTimer: 0
   shield: {fileID: 2681642149414412436, guid: 9a07d8fbbb7a01a45b51941b67240f43, type: 3}
 --- !u!70 &2017811150
@@ -4663,7 +4645,7 @@ Animator:
   m_GameObject: {fileID: 2017811148}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f44bf5374d3b4445bfb570bd451970c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

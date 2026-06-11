@@ -77,11 +77,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError(gameObject.name + " has no gun assigned!");
             return;
-            rb = GetComponent<Rigidbody2D>();
-            anim = GetComponent<Animator>();
-            currentAmmo = maxAmmo;
-            jumpsLeft = maxJumps;
         }
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        currentAmmo = maxAmmo;
+        jumpsLeft = maxJumps;
 
         currentAmmo = currentGun.maxAmmo;
         // Safety check to ensure weapons are linked in the inspector loadout array
@@ -139,12 +139,7 @@ public class PlayerMovement : MonoBehaviour
         }
         bool isRunning = Mathf.Abs(horizontalInput) > 0.01f;
         anim.SetBool("isRunning", isRunning);
-
-        if (anim != null)
-        {
-            anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
-        }
-
+        
         if (transform.position.y < fallThreshold)
         {
             RespawnPlayer();
