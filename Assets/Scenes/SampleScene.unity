@@ -1613,7 +1613,7 @@ MonoBehaviour:
   minX: -2
   maxX: 2
   minY: -1
-  maxY: 3
+  maxY: 1
 --- !u!4 &565507081
 Transform:
   m_ObjectHideFlags: 0
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   spawnInterval: 15
   minX: -2
   maxX: 2
-  minY: -3
+  minY: -1
   maxY: 1
 --- !u!4 &673228276
 Transform:
