@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     public float bulletSpeed = 12f;
     public float knockbackForce = 7f;
     public float recoilForce = 4f;
-    public int maxAmmo = 15;
     public float reloadDuration = 2f;
 
     [Header("Bomb Drop Settings")]
@@ -78,13 +77,8 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError(gameObject.name + " has no gun assigned!");
             return;
         }
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentAmmo = maxAmmo;
-        jumpsLeft = maxJumps;
-
-        // ADDED/MOVED HERE: These now properly run every time the game starts
         currentAmmo = currentGun.maxAmmo;
+        jumpsLeft = maxJumps;
         // Safety check to ensure weapons are linked in the inspector loadout array
         if (loadout == null || loadout.Length == 0)
         {
@@ -132,6 +126,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (fireCooldownTimer > 0f)
+        {
+            fireCooldownTimer -= Time.deltaTime;
+        }
+
         // 4. Horizontal Inputs
         horizontalInput = 0f;
         if (!isMovementLocked)
@@ -147,33 +146,20 @@ public class PlayerMovement : MonoBehaviour
             RespawnPlayer();
         }
 
-        // 4. Shooting Input
-        if (Input.GetKeyDown(shootKey))
-            // Shooting Input
-            if (Input.GetKeyDown(shootKey))
-            {
-                if (!isReloading && fireCooldownTimer <= 0f)
-                {
-                    if (currentAmmo > 0)
-                    {
-                        Shoot();
-                    }
-                    else
-                    {
-                        StartReload();
-                    }
-                }
-            }
+        if (Input.GetKeyDown(shootKey) && !isReloading && fireCooldownTimer <= 0f)
+        {
+            if (currentAmmo > 0) Shoot();
+            else StartReload();
+        }
 
-        // 6. Bomb Drop Input
+        // 4. Weapon Switching Input
+        if (Input.GetKeyDown(switchWeaponKey) && !isReloading)
+        {
+            SwitchWeapon();
+        }
+
+        // 5. Bomb Drop Input
         if (Input.GetKeyDown(bombThrowKey) && !isMovementLocked && !isBombCooldown)
-            // Weapon Switching Input
-            if (Input.GetKeyDown(switchWeaponKey) && !isReloading)
-            {
-                SwitchWeapon();
-            }
-
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             DropItem();
         }
@@ -232,7 +218,6 @@ public class PlayerMovement : MonoBehaviour
                 // Force the falling animation to trigger IMMEDIATELY
                 if (anim != null)
                 {
-                    anim.SetBool("isGrounded", false); // If you use an isGrounded bool in Animator
                     anim.SetBool("isJumping", false);
                     anim.SetBool("isFalling", true);
 
@@ -293,13 +278,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isMovementLocked = true;
             lockTimer = 0.4f;
-            rb.linearVelocity = Vector2.zero;
-            rb.linearVelocity = blastVelocity;
-        }
-        // Handle the fire rate cooldown timer
-        if (fireCooldownTimer > 0f)
-        {
-            fireCooldownTimer -= Time.deltaTime;
+            float preservedYVelocity = rb.linearVelocity.y;
+            rb.linearVelocity = new Vector2(blastVelocity.x, preservedYVelocity);
         }
 
         FlipSprite();
@@ -365,7 +345,6 @@ public class PlayerMovement : MonoBehaviour
         isMovementLocked = false;
         isReloading = false;
         isBombCooldown = false;
-        currentAmmo = maxAmmo;
         jumpsLeft = maxJumps;
         currentBombsLeft = maxBombs;
 
@@ -393,25 +372,10 @@ public class PlayerMovement : MonoBehaviour
                 firePoint,
                 shootingDirection
             );
-            /*
-                        if (bulletRb != null)
-                        {
-                            bulletRb.linearVelocity = new Vector2(shootingDirection * bulletSpeed, 0f);
             fireCooldownTimer = currentGun.fireRate;
-            float shootingDirection = Mathf.Sign(transform.localScale.x);
-
-            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
-
-                            Vector3 bulletScale = newBullet.transform.localScale;
-                            bulletScale.x = Mathf.Abs(bulletScale.x) * shootingDirection;
-                            newBullet.transform.localScale = bulletScale;
-                        }
-            */
-            // Recoil only if standing completely still
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
-                lockTimer = 0.05f;
                 lockTimer = 0.05f;
                 rb.linearVelocity = new Vector2(-shootingDirection * currentGun.recoilForce, rb.linearVelocity.y);
             }
@@ -453,11 +417,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+   private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
-            isGrounded = false;
-        if (collision.collider == currentPlatform)
         {
             isGrounded = false;
             if (collision.collider == currentPlatform)
@@ -466,7 +428,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (jumpsLeft == maxJumps)
             {
-                jumpsLeft = maxJumps - 1; // Fall off edge gracefully leaves 1 jump remaining
+                jumpsLeft = maxJumps - 1; 
             }
         }
     }
@@ -481,11 +443,9 @@ public class PlayerMovement : MonoBehaviour
             if (bulletRb != null && rb != null && shieldTimer <= 0)
             {
                 float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
-                isMovementLocked = true;
-                lockTimer = 0.2f;
                 Bullet bulletScript = collision.GetComponent<Bullet>();
 
-                if (bulletRb != null && rb != null && bulletScript != null)
+                if (bulletScript != null)
                 {
                     float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
 
@@ -501,8 +461,9 @@ public class PlayerMovement : MonoBehaviour
                         finalKnockback *= knockbackMultiplier;
                     }
 
-                    rb.linearVelocity = Vector2.zero;
-                    rb.linearVelocity = new Vector2(pushDirection * finalKnockback, rb.linearVelocity.y);
+                    // FIX: Cache the y velocity FIRST so falling motion isn't wiped out by a zero-reset
+                    float preservedYVelocity = rb.linearVelocity.y;
+                    rb.linearVelocity = new Vector2(pushDirection * finalKnockback, preservedYVelocity);
 
                     Debug.Log($"Hit by {collision.name}. Distance: {distanceTravelled}. Final Knockback: {finalKnockback}");
                 }
@@ -510,20 +471,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
-        // Turn off collisions to fall through cleanly
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, true); // Ignore on
         isGrounded = false;
 
         yield return new WaitForSeconds(0.35f);
 
-        // Safely re-engage collisions so you land on the next floor
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
-        yield return new WaitForSeconds(0.35f);
         if (platformCollider != null && playerCollider != null)
         {
-            Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+            Physics2D.IgnoreCollision(playerCollider, platformCollider, false); // Ignore off
         }
     }
 

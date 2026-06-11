@@ -414,7 +414,6 @@ MonoBehaviour:
   bulletSpeed: 6
   knockbackForce: 7
   recoilForce: 0.3
-  maxAmmo: 15
   reloadDuration: 2
   bombThrowKey: 93
   bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}
@@ -1588,7 +1587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 565507081}
-  - component: {fileID: 565507080}
+  - component: {fileID: 565507082}
   m_Layer: 0
   m_Name: ShieldSpawner
   m_TagString: Untagged
@@ -1596,24 +1595,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &565507080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565507079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: -1
-  maxY: 1
 --- !u!4 &565507081
 Transform:
   m_ObjectHideFlags: 0
@@ -1629,6 +1610,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565507082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565507079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
+  boxPrefab: {fileID: 3637645434173982783, guid: 458a19165b6827347944bab681096756, type: 3}
+  spawnInterval: 15
+  minX: -8
+  maxX: 8
+  minY: -3
+  maxY: 3
 --- !u!1 &600323763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1992,7 +1991,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 673228276}
-  - component: {fileID: 673228275}
+  - component: {fileID: 673228277}
   m_Layer: 0
   m_Name: HealthSpawner
   m_TagString: Untagged
@@ -2000,24 +1999,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &673228275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673228274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: -1
-  maxY: 1
 --- !u!4 &673228276
 Transform:
   m_ObjectHideFlags: 0
@@ -2033,6 +2014,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &673228277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673228274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
+  boxPrefab: {fileID: 9007083041181992011, guid: 2a0b2ab3a62289c4f9ed572436ee786b, type: 3}
+  spawnInterval: 15
+  minX: -8
+  maxX: 8
+  minY: -3
+  maxY: 3
 --- !u!1 &689611143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3861,7 +3860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1505428202}
-  - component: {fileID: 1505428201}
+  - component: {fileID: 1505428203}
   m_Layer: 0
   m_Name: JetpackSpawner
   m_TagString: Untagged
@@ -3869,24 +3868,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1505428201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1505428200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2044df52bd9fe44459ee55e253f93a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
-  boxPrefab: {fileID: 4971827962514377621, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
-  spawnInterval: 15
-  minX: -2
-  maxX: 2
-  minY: -3
-  maxY: 3
 --- !u!4 &1505428202
 Transform:
   m_ObjectHideFlags: 0
@@ -3902,6 +3883,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1505428203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505428200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
+  boxPrefab: {fileID: 4971827962514377621, guid: f10b59721ed65eb468d25442dacc1fce, type: 3}
+  spawnInterval: 15
+  minX: -8
+  maxX: 8
+  minY: -3
+  maxY: 3
 --- !u!1 &1532643415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,7 +4793,6 @@ MonoBehaviour:
   bulletSpeed: 6
   knockbackForce: 7
   recoilForce: 0.3
-  maxAmmo: 15
   reloadDuration: 2
   bombThrowKey: 120
   bombPrefab: {fileID: 8029623463356703715, guid: 3c88846cc20669b4d941859862f80f92, type: 3}

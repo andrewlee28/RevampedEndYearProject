@@ -184,10 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab5c26424058a649ab0535a530f3d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MysteryBox
-  items:
-  - {fileID: 3959846802712643688, guid: 7df126d2ad3b0e549a86314036bbb422, type: 3}
-  - {fileID: 4494800562837974902, guid: 963c71712c90b8948ae4c7d007f999d8, type: 3}
-  - {fileID: 2681642149414412436, guid: 414b832378c523d48b2ed85b3c1d78c4, type: 3}
+  items: []
   spawnPoint: {fileID: 327955401473198297}
   lifetime: 15
 --- !u!50 &2207203342162906374
