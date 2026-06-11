@@ -321,6 +321,28 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log($"{gameObject.name} switched to {currentGun.gameObject.name}!");
     }
 
+    // Call this function from the Mystery Box to force a random weapon change!
+    public void EquipRandomWeapon()
+    {
+        if (loadout == null || loadout.Length == 0) return;
+
+        // 1. Turn off the gun the player is holding right now
+        loadout[currentGunIndex].gameObject.SetActive(false);
+
+        // 2. Roll a random number to pick any gun in your loadout array
+        currentGunIndex = Random.Range(0, loadout.Length);
+
+        // 3. Turn on the randomly chosen gun child object
+        loadout[currentGunIndex].gameObject.SetActive(true);
+
+        // 4. Update the current gun stats and reload reference values
+        currentGun = loadout[currentGunIndex];
+        currentAmmo = currentGun.maxAmmo;
+        isReloading = false; // Cancel a reload if they swap mid-animation
+
+        Debug.Log($"{gameObject.name} pulled a mystery weapon: {currentGun.gameObject.name}!");
+    }
+
     void StartReload()
     {
         isReloading = true;

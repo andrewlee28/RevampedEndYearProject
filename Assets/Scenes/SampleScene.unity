@@ -1115,6 +1115,59 @@ MonoBehaviour:
   maxKnockbackRange: 3
   maxKnockbackMultiplier: 3
   fireRate: 0.2
+--- !u!1 &403613558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 403613560}
+  - component: {fileID: 403613559}
+  m_Layer: 0
+  m_Name: WeaponBoxSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &403613559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403613558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0dc650b5b565f478ead093597c2b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
+  boxPrefab: {fileID: 5644141551454046746, guid: c5225414297214249bcc765aba032afb, type: 3}
+  spawnInterval: 2
+  spawnPoints:
+  - {fileID: 1960472022}
+  - {fileID: 1590826874}
+  - {fileID: 2144480271}
+  - {fileID: 2104277445}
+  - {fileID: 844329249}
+  - {fileID: 1795773721}
+--- !u!4 &403613560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403613558}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.30061, y: 0.10644, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &431848765
 GameObject:
   m_ObjectHideFlags: 0
@@ -5920,3 +5973,4 @@ SceneRoots:
   - {fileID: 2104277446}
   - {fileID: 844329250}
   - {fileID: 1795773722}
+  - {fileID: 403613560}
