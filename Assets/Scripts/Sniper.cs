@@ -12,7 +12,7 @@ public class Sniper : Gun
         
         // --- KNOCKBACK MANAGEMENT ---
         recoilForce = 5f;              // Pushes the shooter back heavily
-        knockbackForce = 15f;           // Massive punch that blasts the victim away
+        knockbackForce = 17.5f;           // Massive punch that blasts the victim away
         distanceBasedKnockback = false; // Disables falloff so it hits hard at any range
     }
 }

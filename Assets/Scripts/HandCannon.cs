@@ -10,7 +10,7 @@ public class HandCannon : Gun
         reloadDuration = 1.0f;          // Very fast, frantic double-barrel reload
         
         // --- KNOCKBACK MANAGEMENT ---
-        knockbackForce = 4.0f;          // Decent baseline knockback at standard range
+        knockbackForce = 6f;          // Decent baseline knockback at standard range
         recoilForce = 8.0f;             // Massive shooter recoil (fires a heavy slug)
         
         // --- DISTANCE FALLOFF CONFIGURATION ---

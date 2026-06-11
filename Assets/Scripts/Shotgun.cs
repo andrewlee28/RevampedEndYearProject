@@ -15,7 +15,7 @@ public class Shotgun : Gun
         // Distance configuration
         distanceBasedKnockback = true;
         maxKnockbackRange = 3f;        // Multiplier smoothly drops until 4 units away
-        maxKnockbackMultiplier = 3.5f; // Point-blank shots get multiplied by 3.5x!
+        maxKnockbackMultiplier = 2.5f; // Point-blank shots get multiplied by 3.5x!
     }
 
     public override void Fire(GameObject bulletPrefab, Transform firePoint, float direction)
