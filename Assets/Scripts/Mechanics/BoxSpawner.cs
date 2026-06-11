@@ -2,28 +2,38 @@ using UnityEngine;
 
 public class BoxSpawner : MonoBehaviour
 {   
-    // Spawn Settings
+    [Header("Spawn Settings")]
     public GameObject boxPrefab;
     public float spawnInterval = 15f;
-    // Spawn Area
-    public float minX = -8f;
-    public float maxX = 8f;
-    public float minY = -3f;
-    public float maxY = 3f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Platform Spawn Zones")]
+    // We changed Transform[] to SpawnZone[]
+    public SpawnZone[] spawnPoints; 
+
     void Start()
     {
         InvokeRepeating(nameof(SpawnBox), 0f, spawnInterval);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void SpawnBox()
     {
-        Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        Instantiate(boxPrefab, randomPosition, Quaternion.identity);
+        if (spawnPoints == null || spawnPoints.Length == 0) return;
+
+        // 1. Pick a random platform zone
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        SpawnZone selectedZone = spawnPoints[randomIndex];
+
+        if (selectedZone == null) return;
+
+        // 2. Use that SPECIFIC zone's width and height!
+        float randomX = Random.Range(-selectedZone.zoneWidth / 2f, selectedZone.zoneWidth / 2f);
+        float randomY = Random.Range(-selectedZone.zoneHeight / 2f, selectedZone.zoneHeight / 2f);
+
+        Vector3 finalSpawnPosition = selectedZone.transform.position + new Vector3(randomX, randomY, 0f);
+
+        if (boxPrefab != null)
+        {
+            Instantiate(boxPrefab, finalSpawnPosition, Quaternion.identity);
+        }
     }
 }

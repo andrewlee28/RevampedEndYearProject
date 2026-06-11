@@ -2,24 +2,45 @@ using UnityEngine;
 
 public class ShieldPowerup : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public float lifetime = 15f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Hover Settings")]
+    public float floatSpeed = 3f;     // How fast it bobs up and down
+    public float floatHeight = 0.2f;  // How high/low it goes from its starting spot
+    
+    private Vector3 startPosition;
+
     void Start()
     {
+        // Save the exact spot where the item spawned on the platform
+        startPosition = transform.position;
+
         Destroy(gameObject, lifetime);
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        // Math sine wave smoothly calculates a fluctuating height over time
+        float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+        
+        // Update the item's position, keeping X and Z exactly the same
+        transform.position = new Vector3(startPosition.x, newY, startPosition.z);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    // Swapped to OnTriggerEnter2D for ghost-like pickup physics
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerMovement>().shieldTimer += 5f;
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+
+            if (player != null)
+            {
+                // Add 5 seconds to the player's shield protective timer!
+                player.shieldTimer += 5f;
+                Debug.Log("Shield activated!");
+            }
+
             Destroy(gameObject);
         }
     }
