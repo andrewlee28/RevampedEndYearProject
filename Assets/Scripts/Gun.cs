@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public Sprite gunSprite; // Drag your gun's artwork into this slot in Unity
     [Header("Gun Stats")]
     public float bulletSpeed = 12f;
     public int maxAmmo = 15;

@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Weapon Visuals")]
+    public SpriteRenderer gunSpriteRenderer; // Drag your 'Gun_Visual' object here
+
+    [Header("UI Visuals")]
+    private LifeDisplay lifeDisplayUI;        // Automatically finds your UI Manager
+
     [Header("Movement Keys")]
     public KeyCode moveLeftKey = KeyCode.LeftArrow;
     public KeyCode moveRightKey = KeyCode.RightArrow;
@@ -44,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
 
     // --- WEAPONS, JUMPS & LOCKOUT STATES ---
-
     private int currentAmmo;
     private bool isReloading = false;
     private float reloadTimer = 0f;
@@ -60,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isBombCooldown = false;
     private float bombCooldownTimer = 0f;
 
+    [Header("Player Status")]
     public int lives = 3;
     public float jetpackTimer = 0f;
     public GameObject jetpack;
@@ -72,6 +78,13 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        // Automatically find the life display UI in the scene upon falling from the sky
+        lifeDisplayUI = GameObject.FindAnyObjectByType<LifeDisplay>();
+        if (lifeDisplayUI != null)
+        {
+            lifeDisplayUI.UpdateLivesDisplay(lives);
+        }
+
         if (currentGun == null)
         {
             Debug.LogError(gameObject.name + " has no gun assigned!");
@@ -79,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
         currentAmmo = currentGun.maxAmmo;
         jumpsLeft = maxJumps;
+
         // Safety check to ensure weapons are linked in the inspector loadout array
         if (loadout == null || loadout.Length == 0)
         {
@@ -88,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Setup weapons and equip the starting one
         InitializeWeapons();
-        currentBombsLeft = maxBombs; 
+        currentBombsLeft = maxBombs;
     }
 
     void Update()
@@ -140,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         }
         bool isRunning = Mathf.Abs(horizontalInput) > 0.01f;
         anim.SetBool("isRunning", isRunning);
-        
+
         if (transform.position.y < fallThreshold)
         {
             RespawnPlayer();
@@ -175,31 +189,22 @@ public class PlayerMovement : MonoBehaviour
             if (anim != null)
             {
                 anim.SetBool("isJumping", true);
-
-                // Forces the animation state to snap-play from frame 0 instantly.
-                // This overrides delays and forces double jumps to restart the animation!
                 anim.Play("Jump", 0, 0f);
             }
         }
 
-        // FIX: Structural logic gap elimination
+        // Structural logic gap elimination
         if (anim != null)
         {
             if (isGrounded)
             {
-                // Grounded means both are always false
                 anim.SetBool("isJumping", false);
                 anim.SetBool("isFalling", false);
             }
             else
             {
-                // IF WE ARE AIRBORNE:
-                // If velocity is upward, we are strictly jumping.
                 bool rising = rb.linearVelocity.y > 0.01f;
-                
                 anim.SetBool("isJumping", rising);
-                
-                // If we are NOT rising, we MUST be falling. No gaps allowed!
                 anim.SetBool("isFalling", !rising);
             }
         }
@@ -211,17 +216,12 @@ public class PlayerMovement : MonoBehaviour
             if (playerCollider != null)
             {
                 StartCoroutine(TemporaryDrop(currentPlatform, playerCollider));
-
-                // Force the player out of the grounded state instantly
                 isGrounded = false;
 
-                // Force the falling animation to trigger IMMEDIATELY
                 if (anim != null)
                 {
                     anim.SetBool("isJumping", false);
                     anim.SetBool("isFalling", true);
-
-                    // Forces the fall animation state to play from frame 0 instantly.
                     anim.Play("Fall", 0, 0f);
                 }
             }
@@ -232,24 +232,24 @@ public class PlayerMovement : MonoBehaviour
             jetpackTimer -= Time.deltaTime;
         else
             jetpackTimer = 0;
+
         if (shieldTimer > 0)
             shieldTimer -= Time.deltaTime;
         else
             shieldTimer = 0;
 
         // 9. Child prefabs
-        jetpack.SetActive(jetpackTimer > 0);
-        shield.SetActive(shieldTimer > 0);
+        if (jetpack != null) jetpack.SetActive(jetpackTimer > 0);
+        if (shield != null) shield.SetActive(shieldTimer > 0);
+        
         FlipSprite();
     }
 
     void DropItem()
     {
-        Debug.Log("DropItem called");
         if (bombPrefab != null && firePoint != null && currentBombsLeft > 0)
         {
             currentBombsLeft--;
-            Debug.Log("Bomb thrown by " + gameObject.name);
             float facingDirection = Mathf.Sign(transform.localScale.x);
 
             GameObject newBomb = Instantiate(bombPrefab, firePoint.position, Quaternion.identity);
@@ -267,7 +267,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 isBombCooldown = true;
                 bombCooldownTimer = bombCooldownDuration;
-                Debug.Log(gameObject.name + " out of bombs! Cooldown activated.");
             }
         }
     }
@@ -281,7 +280,6 @@ public class PlayerMovement : MonoBehaviour
             float preservedYVelocity = rb.linearVelocity.y;
             rb.linearVelocity = new Vector2(blastVelocity.x, preservedYVelocity);
         }
-
         FlipSprite();
     }
 
@@ -291,55 +289,43 @@ public class PlayerMovement : MonoBehaviour
         {
             if (loadout[i] != null)
             {
-                // Deactivate every weapon except the first one (index 0)
                 loadout[i].gameObject.SetActive(i == currentGunIndex);
             }
         }
 
-        // Point currentGun to the active weapon slot
         currentGun = loadout[currentGunIndex];
         currentAmmo = currentGun.maxAmmo;
+        UpdateGunVisual();
     }
 
     void SwitchWeapon()
     {
         if (loadout == null || loadout.Length <= 1) return;
 
-        // Turn off the gun we are holding right now
         loadout[currentGunIndex].gameObject.SetActive(false);
-
-        // Advance to the next gun slot (loops back to 0 if it goes over the total length)
         currentGunIndex = (currentGunIndex + 1) % loadout.Length;
-
-        // Turn on the new gun child object
         loadout[currentGunIndex].gameObject.SetActive(true);
 
-        // Update the script references to match the newly equipped gun
         currentGun = loadout[currentGunIndex];
         currentAmmo = currentGun.maxAmmo;
+        UpdateGunVisual();
 
         Debug.Log($"{gameObject.name} switched to {currentGun.gameObject.name}!");
     }
 
-    // Call this function from the Mystery Box to force a random weapon change!
     public void EquipRandomWeapon()
     {
         if (loadout == null || loadout.Length == 0) return;
 
-        // 1. Turn off the gun the player is holding right now
         loadout[currentGunIndex].gameObject.SetActive(false);
-
-        // 2. Roll a random number to pick any gun in your loadout array
         currentGunIndex = Random.Range(0, loadout.Length);
-
-        // 3. Turn on the randomly chosen gun child object
         loadout[currentGunIndex].gameObject.SetActive(true);
 
-        // 4. Update the current gun stats and reload reference values
         currentGun = loadout[currentGunIndex];
         currentAmmo = currentGun.maxAmmo;
-        isReloading = false; // Cancel a reload if they swap mid-animation
+        isReloading = false; 
 
+        UpdateGunVisual();
         Debug.Log($"{gameObject.name} pulled a mystery weapon: {currentGun.gameObject.name}!");
     }
 
@@ -352,6 +338,13 @@ public class PlayerMovement : MonoBehaviour
     void RespawnPlayer()
     {
         lives--;
+        
+        // Update visual UI hearts instantly when a life drops
+        if (lifeDisplayUI != null)
+        {
+            lifeDisplayUI.UpdateLivesDisplay(lives);
+        }
+
         Debug.Log(gameObject.name + " has " + lives + " lives remaining");
         jetpackTimer = 0;
         shieldTimer = 0;
@@ -370,7 +363,6 @@ public class PlayerMovement : MonoBehaviour
         jumpsLeft = maxJumps;
         currentBombsLeft = maxBombs;
 
-        // Safety check to reset current weapon stats upon respawning
         if (currentGun != null)
         {
             currentAmmo = currentGun.maxAmmo;
@@ -389,12 +381,9 @@ public class PlayerMovement : MonoBehaviour
             currentAmmo--;
             float shootingDirection = Mathf.Sign(transform.localScale.x);
 
-            currentGun.Fire(
-                bulletPrefab,
-                firePoint,
-                shootingDirection
-            );
+            currentGun.Fire(bulletPrefab, firePoint, shootingDirection);
             fireCooldownTimer = currentGun.fireRate;
+            
             if (rb != null && horizontalInput == 0f)
             {
                 isMovementLocked = true;
@@ -409,7 +398,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // --- ACCURATE ENVIRONMENT PHYSICS ENGINE MATRIX ---
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
@@ -425,7 +413,6 @@ public class PlayerMovement : MonoBehaviour
             if (rb != null && rb.linearVelocity.y > 0.1f) return;
             foreach (ContactPoint2D contact in collision.contacts)
             {
-                // Verify the landing normal vector direction is facing upward
                 if (contact.normal.y > 0.6f)
                 {
                     isGrounded = true;
@@ -439,7 +426,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.collider.GetComponent<PlatformEffector2D>() != null)
         {
@@ -450,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (jumpsLeft == maxJumps)
             {
-                jumpsLeft = maxJumps - 1; 
+                jumpsLeft = maxJumps - 1;
             }
         }
     }
@@ -461,49 +448,50 @@ public class PlayerMovement : MonoBehaviour
         {
             if (collision.name.StartsWith(this.gameObject.name)) return;
 
-            Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
-            if (bulletRb != null && rb != null && shieldTimer <= 0)
+            R_Body_Check(collision);
+        }
+    }
+
+    private void R_Body_Check(Collider2D collision)
+    {
+        Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
+        if (bulletRb != null && rb != null && shieldTimer <= 0)
+        {
+            float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
+            Bullet bulletScript = collision.GetComponent<Bullet>();
+
+            if (bulletScript != null)
             {
-                float pushDirection = Mathf.Sign(bulletRb.linearVelocity.x);
-                Bullet bulletScript = collision.GetComponent<Bullet>();
+                float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
+                isMovementLocked = true;
+                lockTimer = 0.2f;
 
-                if (bulletScript != null)
+                float finalKnockback = bulletScript.knockbackForce;
+
+                if (bulletScript.distanceBasedKnockback)
                 {
-                    float distanceTravelled = Vector2.Distance(bulletScript.startPosition, collision.transform.position);
-
-                    isMovementLocked = true;
-                    lockTimer = 0.2f;
-
-                    float finalKnockback = bulletScript.knockbackForce;
-
-                    if (bulletScript.distanceBasedKnockback)
-                    {
-                        float distancePercentage = Mathf.Clamp01(distanceTravelled / bulletScript.maxKnockbackRange);
-                        float knockbackMultiplier = Mathf.Lerp(bulletScript.maxKnockbackMultiplier, 1f, distancePercentage);
-                        finalKnockback *= knockbackMultiplier;
-                    }
-
-                    // FIX: Cache the y velocity FIRST so falling motion isn't wiped out by a zero-reset
-                    float preservedYVelocity = rb.linearVelocity.y;
-                    rb.linearVelocity = new Vector2(pushDirection * finalKnockback, preservedYVelocity);
-
-                    Debug.Log($"Hit by {collision.name}. Distance: {distanceTravelled}. Final Knockback: {finalKnockback}");
+                    float distancePercentage = Mathf.Clamp01(distanceTravelled / bulletScript.maxKnockbackRange);
+                    float knockbackMultiplier = Mathf.Lerp(bulletScript.maxKnockbackMultiplier, 1f, distancePercentage);
+                    finalKnockback *= knockbackMultiplier;
                 }
-                Destroy(collision.gameObject);
+
+                float preservedYVelocity = rb.linearVelocity.y;
+                rb.linearVelocity = new Vector2(pushDirection * finalKnockback, preservedYVelocity);
             }
+            Destroy(collision.gameObject);
         }
     }
 
     private System.Collections.IEnumerator TemporaryDrop(Collider2D platformCollider, Collider2D playerCollider)
     {
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, true); // Ignore on
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
         isGrounded = false;
 
         yield return new WaitForSeconds(0.35f);
 
         if (platformCollider != null && playerCollider != null)
         {
-            Physics2D.IgnoreCollision(playerCollider, platformCollider, false); // Ignore off
+            Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
         }
     }
 
@@ -524,6 +512,14 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontalInput < -0.01f)
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    void UpdateGunVisual()
+    {
+        if (gunSpriteRenderer != null && currentGun != null)
+        {
+            gunSpriteRenderer.sprite = currentGun.gunSprite;
         }
     }
 }
