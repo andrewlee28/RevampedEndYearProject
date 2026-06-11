@@ -10,7 +10,7 @@ public class GrenadeLauncher : Gun
         reloadDuration = 4f;          // Painfully long reload time
         
         // --- KNOCKBACK MANAGEMENT ---
-        knockbackForce = 12.5f;           // Explosive force! Launches victims across the map
+        knockbackForce = 13f;           // Explosive force! Launches victims across the map
         recoilForce = 9f;               // Massive kickback that pushes the shooter backward
         distanceBasedKnockback = false; // The explosion hits just as hard at any distance
         

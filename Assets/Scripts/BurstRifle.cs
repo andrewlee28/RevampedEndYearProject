@@ -10,7 +10,7 @@ public class BurstRifle : Gun
         reloadDuration = 2f;          // Standard, reliable reload speed
         
         // --- KNOCKBACK MANAGEMENT ---
-        knockbackForce = 6f;          // Moderate, steady push on the victim
+        knockbackForce = 8f;          // Moderate, steady push on the victim
         recoilForce = 2.0f;             // Light, easily manageable shooter recoil
         distanceBasedKnockback = false; // Keeps its full impact even at long range
         

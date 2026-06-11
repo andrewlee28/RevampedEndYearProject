@@ -10,7 +10,7 @@ public class Pistol : Gun
         reloadDuration = 1.5f;          // Quick, agile reload
         
         // --- KNOCKBACK MANAGEMENT ---
-        knockbackForce = 4f;          // Low knockback (as requested, won't launch opponents)
+        knockbackForce = 6f;          // Low knockback (as requested, won't launch opponents)
         recoilForce = 1.5f;             // Very controllable shooter recoil
         distanceBasedKnockback = false; // Regular static knockback at any range
         
